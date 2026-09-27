@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THRIFTY — Penjualan</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f1efe9;
+            color: #292b27;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #d9d6ce;
+            margin-bottom: 35px;
+            gap: 20px;
+        }
+
+        .brand {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: #85847c;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin: 4px 0 0;
+            text-transform: uppercase;
+        }
+
+        .header-label {
+            color: #666b60;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border: 1px solid #c9c8be;
+            padding: 10px 14px;
+        }
+
+        /* NAVIGATION */
+
+        .navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 35px;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #526052;
+            background: #dce2d7;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .navigation a:hover {
+            background: #292b27;
+            color: white;
+        }
+
+        /* TITLE */
+
+        .section-header {
+            margin-bottom: 22px;
+        }
+
+        .eyebrow {
+            color: #7b8175;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin: 0 0 9px;
+        }
+
+        .section-header h2 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 32px;
+            font-weight: 500;
+            margin: 0 0 7px;
+        }
+
+        .section-header p {
+            color: #85847c;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        /* CARD */
+
+        .card {
+            background: #faf9f6;
+            padding: 28px;
+            border: 1px solid #e4e1d9;
+            border-radius: 5px;
+            box-shadow: 0 5px 18px rgba(47, 60, 46, 0.04);
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 23px;
+            font-weight: 500;
+            margin: 0 0 25px;
+        }
+
+        /* FORM */
+
+        label {
+            display: block;
+            color: #666b60;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            border: 1px solid #d9d6ce;
+            border-radius: 4px;
+            background: #fff;
+            color: #292b27;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #71806f;
+        }
+
+        input[readonly] {
+            background: #eef0eb;
+            color: #596257;
+            font-weight: 600;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background: #292b27;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background: #4b574b;
+        }
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 850px;
+        }
+
+        th {
+            background: #dce2d7;
+            color: #4d5a4d;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        th,
+        td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e2da;
+        }
+
+        td {
+            color: #555850;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            color: #929188;
+            font-size: 10px;
+            letter-spacing: 1px;
+            margin-top: 25px;
+            text-transform: uppercase;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 25px 16px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .brand {
+                font-size: 29px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+                <h1 class="brand">THRIFTY</h1>
+                <p class="subtitle">Sales & Accounting System</p>
+            </div>
+
+            <div class="header-label">
+                SALES / 2026
+            </div>
+
+        </header>
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+            <a href="index.html">Dashboard</a>
+
+            <a href="barang.html">Data Barang</a>
+
+            <a href="pelanggan.html">Data Pelanggan</a>
+
+        </nav>
+
+        <!-- TITLE -->
+
+        <section class="section-header">
+
+            <p class="eyebrow">04 / Sales</p>
+
+            <h2>Sales transaction.</h2>
+
+            <p>Record sales and track your gross profit.</p>
+
+        </section>
+
+        <!-- FORM -->
+
+        <div class="card">
+
+            <h3 class="card-title">
+                Add new transaction
+            </h3>
+
+            <form id="formPenjualan">
+
+                <label>Tanggal</label>
+
+                <input type="date" id="tanggal" required>
+
+                <label>Nama Pelanggan</label>
+
+                <select id="pelanggan" required>
+
+                    <option value="">
+                        -- Pilih Pelanggan --
+                    </option>
+
+                </select>
+
+                <label>Barang</label>
+
+                <select id="barang" required>
+
+                    <option value="">
+                        -- Pilih Barang --
+                    </option>
+
+                </select>
+
+                <label>Harga Jual</label>
+
+                <input
+                    type="text"
+                    id="hargaJual"
+                    readonly
+                >
+
+                <label>Jumlah</label>
+
+                <input
+                    type="number"
+                    id="qty"
+                    min="1"
+                    required
+                >
+
+                <label>Total</label>
+
+                <input
+                    type="text"
+                    id="total"
+                    readonly
+                >
+
+                <button type="submit">
+                    Simpan Penjualan
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- TABLE -->
+
+        <div class="card">
+
+            <h3 class="card-title">
+                Sales history
+            </h3>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Pelanggan</th>
+                            <th>Barang</th>
+                            <th>Qty</th>
+                            <th>Harga Jual</th>
+                            <th>HPP</th>
+                            <th>Laba Kotor</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tabelPenjualan">
+
+                        <tr>
+                            <td colspan="7">
+                                Belum ada transaksi.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <span>THRIFTY — Accounting System</span>
+
+            <span>Sales Management</span>
+
+        </footer>
+
+    </div>
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/supabase.js"></script>
+
+    <script src="js/penjualan.js"></script>
+
+</body>
+
+</html>

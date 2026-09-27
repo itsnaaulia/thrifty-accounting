@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THRIFTY — Data Barang</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=DM+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f1efe9;
+            color: #292b27;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #d9d6ce;
+            margin-bottom: 35px;
+            gap: 20px;
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border: 1.5px solid #292b27;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bodoni Moda', serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .brand {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: #85847c;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin: 4px 0 0;
+            text-transform: uppercase;
+        }
+
+        .header-label {
+            color: #666b60;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border: 1px solid #c9c8be;
+            padding: 10px 14px;
+        }
+
+        /* NAVIGATION */
+
+        .navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 35px;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #526052;
+            background: #dce2d7;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .navigation a:hover {
+            background: #292b27;
+            color: white;
+        }
+
+        /* SECTION TITLE */
+
+        .section-header {
+            margin-bottom: 22px;
+        }
+
+        .eyebrow {
+            color: #7b8175;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin: 0 0 9px;
+        }
+
+        .section-header h2 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 32px;
+            font-weight: 500;
+            margin: 0 0 7px;
+        }
+
+        .section-header p {
+            color: #85847c;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        /* CARD */
+
+        .card {
+            background: #faf9f6;
+            padding: 28px;
+            border: 1px solid #e4e1d9;
+            border-radius: 5px;
+            box-shadow: 0 5px 18px rgba(47, 60, 46, 0.04);
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 23px;
+            font-weight: 500;
+            margin: 0 0 25px;
+        }
+
+        /* FORM */
+
+        label {
+            display: block;
+            color: #666b60;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            border: 1px solid #d9d6ce;
+            border-radius: 4px;
+            background: #fff;
+            color: #292b27;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #71806f;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background: #292b27;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background: #4b574b;
+        }
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 750px;
+        }
+
+        th {
+            background: #dce2d7;
+            color: #4d5a4d;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        th,
+        td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e2da;
+        }
+
+        td {
+            color: #555850;
+        }
+
+        td button {
+            padding: 7px 10px;
+            margin-right: 4px;
+            font-size: 10px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            color: #929188;
+            font-size: 10px;
+            letter-spacing: 1px;
+            margin-top: 25px;
+            text-transform: uppercase;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 25px 16px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .brand-area {
+                gap: 10px;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 15px;
+            }
+
+            .brand {
+                font-size: 29px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .footer {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="brand-area">
+
+                <div class="logo">
+                    T
+                </div>
+
+                <div>
+
+                    <h1 class="brand">
+                        THRIFTY
+                    </h1>
+
+                    <p class="subtitle">
+                        Sales & Accounting System
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="header-label">
+                INVENTORY / 2026
+            </div>
+
+        </header>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+            <a href="index.html">
+                Dashboard
+            </a>
+
+            <a href="pelanggan.html">
+                Data Pelanggan
+            </a>
+
+            <a href="penjualan.html">
+                Penjualan
+            </a>
+
+        </nav>
+
+
+        <!-- TITLE -->
+
+        <section class="section-header">
+
+            <p class="eyebrow">
+                02 / Inventory
+            </p>
+
+            <h2>
+                Product management.
+            </h2>
+
+            <p>
+                Kelola produk, harga, kategori, dan stok THRIFTY.
+            </p>
+
+        </section>
+
+
+        <!-- FORM -->
+
+        <div class="card">
+
+            <h3 class="card-title">
+                Add new product
+            </h3>
+
+            <form id="formBarang">
+
+                <label>
+                    Kode Barang
+                </label>
+
+                <input
+                    type="text"
+                    id="kode_barang"
+                    placeholder="Contoh: TH003"
+                    required
+                >
+
+
+                <label>
+                    Nama Barang
+                </label>
+
+                <input
+                    type="text"
+                    id="nama_barang"
+                    placeholder="Contoh: Kemeja Linen"
+                    required
+                >
+
+
+                <label>
+                    Kategori
+                </label>
+
+                <select id="kategori" required>
+
+                    <option value="">
+                        -- Pilih Kategori --
+                    </option>
+
+                    <option value="Atasan">
+                        Atasan
+                    </option>
+
+                    <option value="Bawahan">
+                        Bawahan
+                    </option>
+
+                    <option value="Outer">
+                        Outer
+                    </option>
+
+                    <option value="Dress">
+                        Dress
+                    </option>
+
+                    <option value="Jumpsuit">
+                        Jumpsuit
+                    </option>
+
+                    <option value="Hijab">
+                        Hijab
+                    </option>
+
+                    <option value="Tas">
+                        Tas
+                    </option>
+
+                    <option value="Topi">
+                        Topi
+                    </option>
+
+                    <option value="Belt">
+                        Belt
+                    </option>
+
+                    <option value="Scarf">
+                        Scarf
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Harga Beli
+                </label>
+
+                <input
+                    type="number"
+                    id="harga_beli"
+                    placeholder="Contoh: 50000"
+                    min="0"
+                    required
+                >
+
+
+                <label>
+                    Harga Jual
+                </label>
+
+                <input
+                    type="number"
+                    id="harga_jual"
+                    placeholder="Contoh: 90000"
+                    min="0"
+                    required
+                >
+
+
+                <label>
+                    Stok
+                </label>
+
+                <input
+                    type="number"
+                    id="stok"
+                    placeholder="Contoh: 5"
+                    min="0"
+                    required
+                >
+
+
+                <button type="submit">
+                    Tambah Barang
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="card">
+
+            <h3 class="card-title">
+                Product inventory
+            </h3>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Kode
+                            </th>
+
+                            <th>
+                                Nama
+                            </th>
+
+                            <th>
+                                Kategori
+                            </th>
+
+                            <th>
+                                Harga Beli
+                            </th>
+
+                            <th>
+                                Harga Jual
+                            </th>
+
+                            <th>
+                                Stok
+                            </th>
+
+                            <th>
+                                Aksi
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabelBarang">
+
+                        <tr>
+
+                            <td colspan="7">
+                                Belum ada data barang.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <span>
+                THRIFTY — Accounting System
+            </span>
+
+            <span>
+                Inventory Management
+            </span>
+
+        </footer>
+
+    </div>
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/supabase.js"></script>
+
+    <script src="js/barang.js"></script>
+
+</body>
+
+</html>
