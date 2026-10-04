@@ -3,6 +3,7 @@ const pilihanPelanggan = document.getElementById("pelanggan");
 const inputQty = document.getElementById("qty");
 const inputTotal = document.getElementById("total");
 
+
 async function tampilkanPilihanBarang() {
 
     const { data, error } = await supabaseClient
@@ -31,6 +32,8 @@ async function tampilkanPilihanBarang() {
 }
 
 tampilkanPilihanBarang();
+
+
 async function tampilkanPilihanPelanggan() {
 
     const { data, error } = await supabaseClient
@@ -56,6 +59,8 @@ async function tampilkanPilihanPelanggan() {
 }
 
 tampilkanPilihanPelanggan();
+
+
 pilihanBarang.addEventListener("change", async function () {
 
     const barangId = pilihanBarang.value;
@@ -78,6 +83,8 @@ pilihanBarang.addEventListener("change", async function () {
     document.getElementById("hargaJual").value =
         "Rp " + Number(barang.harga_jual).toLocaleString("id-ID");
 });
+
+
 inputQty.addEventListener("input", function () {
 
     const hargaJual = Number(
@@ -91,95 +98,125 @@ inputQty.addEventListener("input", function () {
     inputTotal.value =
         "Rp " + total.toLocaleString("id-ID");
 });
+
+
 const formPenjualan = document.getElementById("formPenjualan");
+
+
 formPenjualan.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-const tanggal = document.getElementById("tanggal").value;
-const pelangganId = document.getElementById("pelanggan").value;
-const barangId = document.getElementById("barang").value;
-const qty = Number(document.getElementById("qty").value);
+    const tanggal = document.getElementById("tanggal").value;
+    const pelangganId = document.getElementById("pelanggan").value;
+    const barangId = document.getElementById("barang").value;
+    const qty = Number(document.getElementById("qty").value);
 
-const hargaJual = Number(
-    document.getElementById("hargaJual").value.replace(/\D/g, "")
-);
+    const metodePembayaran =
+        document.getElementById("metodePembayaran").value;
 
-const total = hargaJual * qty;
+    const hargaJual = Number(
+        document.getElementById("hargaJual").value.replace(/\D/g, "")
+    );
 
-const { data, error } = await supabaseClient
-    .from("penjualan")
-    .insert([
-        {
-            tanggal: tanggal,
-            pelanggan_id: pelangganId,
-            total: total
-        }
-    ])
-    .select()
-    .single();
+    const total = hargaJual * qty;
 
-if (error) {
-    console.error("Error:", error);
-    alert("❌ Gagal menyimpan penjualan.");
-    return;
-}
 
-alert("✅ Penjualan berhasil disimpan!");
+    const { data, error } = await supabaseClient
+        .from("penjualan")
+        .insert([
+            {
+                tanggal: tanggal,
+                pelanggan_id: pelangganId,
+                total: total,
+                metode_pembayaran: metodePembayaran
+            }
+        ])
+        .select()
+        .single();
 
-console.log("Penjualan tersimpan:", data);
-const { data: barang, error: barangError } = await supabaseClient
-    .from("barang")
-    .select("stok, harga_beli")
-    .eq("id", barangId)
-    .single();
 
-if (barangError) {
-    console.error("Error mengambil data barang:", barangError);
-    alert("❌ Gagal mengambil data barang.");
-    return;
-}
-const { error: detailError } = await supabaseClient
-    .from("detail_penjualan")
-    .insert([
-        {
-            penjualan_id: data.id,
-            barang_id: barangId,
-            qty: qty,
-            harga_jual: hargaJual,
-            harga_beli: barang.harga_beli,
-            subtotal: total
-        }
-    ]);
+    if (error) {
+        console.error("Error:", error);
+        alert("❌ Gagal menyimpan penjualan.");
+        return;
+    }
 
-if (detailError) {
-    console.error("Error detail:", detailError);
-    alert("❌ Detail penjualan gagal disimpan.");
-    return;
-}
 
-const stokBaru = barang.stok - qty;
+    console.log("Penjualan tersimpan:", data);
 
-if (stokBaru < 0) {
-    alert("❌ Stok barang tidak mencukupi.");
-    return;
-}
 
-const { error: stokError } = await supabaseClient
-    .from("barang")
-    .update({
-        stok: stokBaru
-    })
-    .eq("id", barangId);
+    const { data: barang, error: barangError } = await supabaseClient
+        .from("barang")
+        .select("stok, harga_beli")
+        .eq("id", barangId)
+        .single();
 
-if (stokError) {
-    console.error("Error mengurangi stok:", stokError);
-    alert("❌ Gagal mengurangi stok.");
-    return;
-}
 
-alert("✅ Stok berhasil diperbarui!");
+    if (barangError) {
+        console.error("Error mengambil data barang:", barangError);
+        alert("❌ Gagal mengambil data barang.");
+        return;
+    }
+
+
+    const stokBaru = barang.stok - qty;
+
+
+    if (stokBaru < 0) {
+        alert("❌ Stok barang tidak mencukupi.");
+        return;
+    }
+
+
+    const { error: detailError } = await supabaseClient
+        .from("detail_penjualan")
+        .insert([
+            {
+                penjualan_id: data.id,
+                barang_id: barangId,
+                qty: qty,
+                harga_jual: hargaJual,
+                harga_beli: barang.harga_beli,
+                subtotal: total
+            }
+        ]);
+
+
+    if (detailError) {
+        console.error("Error detail:", detailError);
+        alert("❌ Detail penjualan gagal disimpan.");
+        return;
+    }
+
+
+    const { error: stokError } = await supabaseClient
+        .from("barang")
+        .update({
+            stok: stokBaru
+        })
+        .eq("id", barangId);
+
+
+    if (stokError) {
+        console.error("Error mengurangi stok:", stokError);
+        alert("❌ Gagal mengurangi stok.");
+        return;
+    }
+
+
+    alert("✅ Penjualan berhasil disimpan!");
+
+    formPenjualan.reset();
+
+    document.getElementById("hargaJual").value = "";
+    document.getElementById("total").value = "";
+
+    tampilkanPenjualan();
+
 });
+
+
 async function tampilkanPenjualan() {
 
     const { data, error } = await supabaseClient
@@ -191,6 +228,7 @@ async function tampilkanPenjualan() {
             subtotal,
             penjualan (
                 tanggal,
+                metode_pembayaran,
                 pelanggan (
                     nama
                 )
@@ -201,38 +239,64 @@ async function tampilkanPenjualan() {
         `)
         .order("id", { ascending: false });
 
+
     if (error) {
         console.error("Error mengambil data penjualan:", error);
         return;
     }
 
-    const tabelPenjualan = document.getElementById("tabelPenjualan");
+
+    const tabelPenjualan =
+        document.getElementById("tabelPenjualan");
+
 
     if (data.length === 0) {
+
         tabelPenjualan.innerHTML =
-            "<tr><td colspan='5'>Belum ada transaksi.</td></tr>";
+            "<tr><td colspan='7'>Belum ada transaksi.</td></tr>";
+
         return;
     }
 
+
     tabelPenjualan.innerHTML = "";
+
 
     data.forEach(function (detail) {
 
         const baris = `
             <tr>
                 <td>${detail.penjualan.tanggal}</td>
+
                 <td>${detail.penjualan.pelanggan.nama}</td>
+
                 <td>${detail.barang.nama_barang}</td>
+
                 <td>${detail.qty}</td>
-                <td>Rp ${Number(detail.harga_jual).toLocaleString("id-ID")}</td>
-                <td>Rp ${Number(detail.harga_beli * detail.qty).toLocaleString("id-ID")}</td>
-                <td>Rp ${Number((detail.harga_jual - detail.harga_beli) * detail.qty).toLocaleString("id-ID")}</td>
-                                "id-ID")}</td>
+
+                <td>
+                    Rp ${Number(detail.harga_jual)
+                        .toLocaleString("id-ID")}
+                </td>
+
+                <td>
+                    Rp ${Number(detail.harga_beli * detail.qty)
+                        .toLocaleString("id-ID")}
+                </td>
+
+                <td>
+                    Rp ${Number(
+                        (detail.harga_jual - detail.harga_beli)
+                        * detail.qty
+                    ).toLocaleString("id-ID")}
+                </td>
             </tr>
         `;
 
         tabelPenjualan.innerHTML += baris;
     });
+
 }
+
 
 tampilkanPenjualan();

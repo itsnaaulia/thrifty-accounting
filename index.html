@@ -7,585 +7,1136 @@
 
     <title>THRIFTY — Dashboard</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=DM+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            padding: 40px;
             background: #f1efe9;
             color: #292b27;
-            font-family: 'DM Sans', sans-serif;
+            font-family: "DM Sans", sans-serif;
         }
 
-        .container {
-            max-width: 1120px;
-            margin: auto;
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
-        /* HEADER */
-
-        .header {
+        .app {
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 25px;
-            border-bottom: 1px solid #d9d6ce;
-            gap: 20px;
         }
 
-        .brand-area {
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 235px;
+            height: 100vh;
+            padding: 28px 18px;
+            background: #e8e6df;
+            border-right: 1px solid #d3d0c8;
+        }
+
+        .brand {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            padding: 0 8px 25px;
+            border-bottom: 1px solid #d3d0c8;
         }
 
         .logo {
-            width: 48px;
-            height: 48px;
-            border: 1.5px solid #292b27;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #292b27;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Bodoni Moda', serif;
+            font-family: "Bodoni Moda", serif;
             font-size: 18px;
-            font-weight: 600;
-            letter-spacing: -1px;
         }
 
-        .brand {
-            font-family: 'Bodoni Moda', serif;
+        .brand-name {
+            margin: 0;
+            font-family: "Bodoni Moda", serif;
+            font-size: 23px;
+            font-weight: 600;
+        }
+
+        .brand-subtitle {
+            margin: 2px 0 0;
+            color: #292b27;
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .menu-title {
+            margin: 28px 8px 10px;
+            color: #292b27;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .menu a {
+            display: block;
+            margin-bottom: 4px;
+            padding: 12px 11px;
+            border-radius: 5px;
+            color: #292b27;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .menu a:hover {
+            background: #dedcd5;
+        }
+
+        .menu a.active {
+            background: #292b27;
+            color: #f1efe9;
+        }
+
+        .settings {
+            position: absolute;
+            right: 18px;
+            bottom: 25px;
+            left: 18px;
+            padding-top: 18px;
+            border-top: 1px solid #d3d0c8;
+        }
+
+        .settings a {
+            display: block;
+            padding: 11px;
+            color: #292b27;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* MAIN */
+
+        .main {
+            width: calc(100% - 235px);
+            margin-left: 235px;
+            padding: 30px 38px 50px;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* TOP */
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #d3d0c8;
+        }
+
+        .top-left {
+            color: #292b27;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .top-right {
+            color: #292b27;
+            font-size: 9px;
+        }
+
+        /* WELCOME */
+
+        .welcome {
+            margin: 40px 0 30px;
+        }
+
+        .welcome-label {
+            margin: 0 0 8px;
+            color: #697465;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .welcome h1 {
+            margin: 0 0 10px;
+            font-family: "Bodoni Moda", serif;
             font-size: 36px;
+            font-weight: 500;
+        }
+
+        .welcome p.description {
+            max-width: 650px;
+            margin: 0;
+            color: #292b27;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .location {
+            margin-top: 8px !important;
+            color: #697465 !important;
+            font-size: 9px !important;
             font-weight: 600;
             letter-spacing: 1px;
-            margin: 0;
-        }
-
-        .subtitle {
-            color: #85847c;
-            font-size: 11px;
-            letter-spacing: 2px;
-            margin: 4px 0 0;
             text-transform: uppercase;
         }
 
-        .header-label {
-            color: #666b60;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            border: 1px solid #c9c8be;
-            padding: 10px 14px;
-        }
+        /* ACTION */
 
-        /* INTRO */
-
-        .intro {
-            margin: 42px 0 28px;
-        }
-
-        .eyebrow {
-            color: #7b8175;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            margin: 0 0 10px;
-        }
-
-        .intro h2 {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 34px;
-            font-weight: 500;
-            letter-spacing: -0.5px;
-            margin: 0 0 14px;
-        }
-
-        .business-description {
-            max-width: 850px;
-            color: #686a63;
-            font-size: 13px;
-            line-height: 1.9;
-            margin: 0;
-            text-align: justify;
-        }
-
-        .business-description strong {
-            color: #4f594c;
-            font-weight: 700;
-        }
-
-        /* INFORMATION */
-
-        .information {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 35px;
-        }
-
-        .info-card {
-            background: #faf9f6;
-            padding: 25px;
-            border: 1px solid #e4e1d9;
-            border-radius: 5px;
-        }
-
-        .info-card h3 {
-            color: #697465;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin: 0 0 15px;
-        }
-
-        .info-card p {
-            color: #686a63;
-            font-size: 12px;
-            line-height: 1.8;
-            margin: 0;
-            text-align: justify;
-        }
-
-        .social {
-            margin-top: 15px;
-            font-size: 12px;
-        }
-
-        .social span {
-            color: #85847c;
-        }
-
-        .social strong {
-            color: #4f594c;
-        }
-
-        /* DASHBOARD CARDS */
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-            margin-bottom: 35px;
-        }
-
-        .card {
-            background: #faf9f6;
-            padding: 25px;
-            border: 1px solid #e4e1d9;
-            border-radius: 5px;
-            min-height: 130px;
-            transition: background 0.2s ease;
-        }
-
-        .card:hover {
-            background: #fff;
-        }
-
-        .card h3 {
-            color: #85847c;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1.8px;
-            text-transform: uppercase;
-            margin: 0 0 20px;
-        }
-
-        .card p {
-            color: #292b27;
-            font-size: 27px;
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin: 0;
-            overflow-wrap: anywhere;
-        }
-
-        .card.highlight {
-            background: #dce2d7;
-            border-color: #dce2d7;
-        }
-
-        .card.highlight h3 {
-            color: #697465;
-        }
-
-        .card.highlight p {
-            color: #303e31;
-        }
-
-        /* MENU */
-
-        .navigation {
-            background: #292b27;
-            color: #f5f3ed;
-            padding: 25px;
-            border-radius: 5px;
-        }
-
-        .navigation h3 {
-            font-size: 10px;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin: 0 0 20px;
-            color: #b7b8ae;
-        }
-
-        .menu {
+        .actions {
             display: flex;
-            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .actions a {
+            padding: 10px 13px;
+            border: 1px solid #cfcac1;
+            background: #faf9f6;
+            color: #292b27;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .actions a.primary {
+            background: #292b27;
+            border-color: #292b27;
+            color: #f1efe9;
+        }
+
+        /* SECTION */
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-family: "Bodoni Moda", serif;
+            font-size: 21px;
+            font-weight: 500;
+        }
+
+        .section-title span {
+            color: #292b27;
+            font-size: 8px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* KPI */
+
+        .kpi {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
         }
 
-        .navigation a {
-            display: inline-block;
-            text-decoration: none;
-            color: #f5f3ed;
-            border: 1px solid #55574f;
-            padding: 12px 17px;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 3px;
-            transition: all 0.2s ease;
+        .kpi-card {
+            min-height: 125px;
+            padding: 20px;
+            background: #faf9f6;
+            border: 1px solid #dedbd3;
+            border-radius: 5px;
         }
 
-        .navigation a:hover {
+        .kpi-card.green {
             background: #dce2d7;
             border-color: #dce2d7;
+        }
+
+        .kpi-card span {
+            display: block;
+            margin-bottom: 20px;
             color: #292b27;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .kpi-card strong {
+            display: block;
+            color: #292b27;
+            font-size: 23px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        /* ACCOUNTING */
+
+        .accounting {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .accounting-card {
+            padding: 15px 18px;
+            border-top: 1px solid #d1cec5;
+            border-bottom: 1px solid #d1cec5;
+        }
+
+        .accounting-card span {
+            display: block;
+            margin-bottom: 6px;
+            color: #292b27;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .accounting-card strong {
+            color: #292b27;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* PANELS */
+
+        .panels {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 10px;
+            margin-top: 35px;
+        }
+
+        .panel {
+            padding: 22px;
+            background: #faf9f6;
+            border: 1px solid #dedbd3;
+            border-radius: 5px;
+        }
+
+        .panel-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .panel-title h2 {
+            margin: 0;
+            font-family: "Bodoni Moda", serif;
+            font-size: 19px;
+            font-weight: 500;
+        }
+
+        .panel-title span {
+            color: #292b27;
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CHART */
+
+        .chart {
+            height: 190px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            border-bottom: 1px solid #d9d6ce;
+        }
+
+        .chart-item {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .chart-bar {
+            width: 75%;
+            max-width: 45px;
+            background: #879582;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .chart-month {
+            margin: 8px 0;
+            color: #292b27;
+            font-size: 8px;
+        }
+
+        /* CATEGORY */
+
+        .category {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .category-row {
+            display: grid;
+            grid-template-columns: 75px 1fr 30px;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .category-row span {
+            color: #292b27;
+            font-size: 10px;
+        }
+
+        .progress {
+            height: 5px;
+            background: #e3e0d8;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress div {
+            height: 100%;
+            background: #697465;
+        }
+
+        .category-row strong {
+            color: #292b27;
+            font-size: 9px;
+            text-align: right;
+        }
+
+        /* LOWER */
+
+        .lower {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .list-row {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e2da;
+            color: #292b27;
+            font-size: 10px;
+        }
+
+        .list-row:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .list-row strong {
+            color: #292b27;
+        }
+
+        /* TABLE */
+
+        .recent {
+            margin-top: 10px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 10px 8px;
+            border-bottom: 1px solid #d8d5cd;
+            color: #292b27;
+            font-size: 8px;
+            text-align: left;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 13px 8px;
+            border-bottom: 1px solid #e5e2da;
+            color: #292b27;
+            font-size: 10px;
         }
 
         /* FOOTER */
 
-        .footer {
+        footer {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-            color: #929188;
-            font-size: 10px;
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid #d8d5cd;
+            color: #292b27;
+            font-size: 8px;
             letter-spacing: 1px;
-            margin-top: 24px;
             text-transform: uppercase;
         }
 
-        /* MOBILE */
+        /* RESPONSIVE */
 
-        @media (max-width: 700px) {
+        @media (max-width: 900px) {
 
-            body {
-                padding: 25px 16px;
+            .sidebar {
+                width: 190px;
             }
 
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
+            .main {
+                width: calc(100% - 190px);
+                margin-left: 190px;
+                padding: 25px;
             }
 
-            .brand-area {
-                gap: 10px;
+            .kpi {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .logo {
-                width: 40px;
-                height: 40px;
-                font-size: 15px;
-            }
-
-            .brand {
-                font-size: 29px;
-            }
-
-            .header-label {
-                font-size: 8px;
-                padding: 8px;
-            }
-
-            .intro {
-                margin-top: 32px;
-            }
-
-            .intro h2 {
-                font-size: 29px;
-            }
-
-            .business-description {
-                font-size: 12px;
-                line-height: 1.8;
-            }
-
-            .information {
+            .panels {
                 grid-template-columns: 1fr;
             }
 
-            .cards {
+            .lower {
                 grid-template-columns: 1fr;
-            }
-
-            .card {
-                min-height: 110px;
-                padding: 22px;
-            }
-
-            .card p {
-                font-size: 24px;
-            }
-
-            .footer {
-                flex-direction: column;
             }
         }
 
-    </style>
+        @media (max-width: 650px) {
 
+            .app {
+                display: block;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                min-height: auto;
+            }
+
+            .settings {
+                position: static;
+                margin-top: 15px;
+            }
+
+            .main {
+                width: 100%;
+                margin-left: 0;
+                padding: 20px 15px;
+            }
+
+            .kpi {
+                grid-template-columns: 1fr;
+            }
+
+            .accounting {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome h1 {
+                font-size: 30px;
+            }
+
+            footer {
+                display: block;
+                line-height: 1.8;
+            }
+        }
+    </style>
 </head>
+
 
 <body>
 
-    <div class="container">
+<div class="app">
 
-        <!-- HEADER -->
 
-        <header class="header">
+    <aside class="sidebar">
 
-            <div class="brand-area">
+        <div class="brand">
 
-                <div class="logo">
-                    T
-                </div>
-
-                <div>
-
-                    <h1 class="brand">
-                        THRIFTY
-                    </h1>
-
-                    <p class="subtitle">
-                        Sales & Accounting System
-                    </p>
-
-                </div>
-
+            <div class="logo">
+                T
             </div>
 
-            <div class="header-label">
-                BUSINESS / 2026
-            </div>
+            <div>
+                <h1 class="brand-name">
+                    THRIFTY
+                </h1>
 
-        </header>
-
-
-        <!-- BUSINESS INTRODUCTION -->
-
-        <section class="intro">
-
-            <p class="eyebrow">
-                01 / Dashboard
-            </p>
-
-            <h2>
-                Business overview.
-            </h2>
-
-            <p class="business-description">
-
-                <strong>THRIFTY</strong> merupakan usaha thrift yang berdiri
-                sejak <strong>2024</strong> dan menyediakan berbagai fashion
-                preloved seperti baju, celana, outer, dan aksesori.
-                THRIFTY hadir buat kamu yang ingin tetap tampil stylish
-                dengan pilihan fashion yang affordable. Sistem ini dibuat
-                untuk membantu mengelola stok barang, data pelanggan,
-                transaksi penjualan, serta perhitungan HPP dan laba kotor
-                secara lebih rapi dan praktis.
-
-            </p>
-
-        </section>
-
-
-        <!-- BUSINESS INFORMATION -->
-
-        <section class="information">
-
-            <div class="info-card">
-
-                <h3>
-                    About the business
-                </h3>
-
-                <p>
-                    THRIFTY berfokus pada penjualan fashion preloved yang
-                    masih layak pakai dan memiliki nilai jual. Produk yang
-                    tersedia meliputi baju, celana, outer, dan aksesori
-                    dengan pilihan yang beragam dan harga yang terjangkau.
+                <p class="brand-subtitle">
+                    Tembalang, Semarang
                 </p>
-
-                <div class="social">
-
-                    <span>
-                        Instagram
-                    </span>
-
-                    <strong>
-                        @thrifty.id
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <h3>
-                    About this system
-                </h3>
-
-                <p>
-                    Aplikasi THRIFTY digunakan untuk membantu proses
-                    pengelolaan usaha, mulai dari pencatatan barang dan
-                    pelanggan, pengelolaan transaksi penjualan, pemantauan
-                    stok, hingga perhitungan omzet, HPP, dan laba kotor.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- DASHBOARD -->
-
-        <div class="cards">
-
-            <div class="card highlight">
-
-                <h3>
-                    Total Omzet
-                </h3>
-
-                <p id="totalOmzet">
-                    Rp 0
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>
-                    Total Transaksi
-                </h3>
-
-                <p id="totalTransaksi">
-                    0
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>
-                    Barang Terjual
-                </h3>
-
-                <p id="barangTerjual">
-                    0
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>
-                    Total HPP
-                </h3>
-
-                <p id="totalHPP">
-                    Rp 0
-                </p>
-
-            </div>
-
-
-            <div class="card highlight">
-
-                <h3>
-                    Laba Kotor
-                </h3>
-
-                <p id="labaKotor">
-                    Rp 0
-                </p>
-
             </div>
 
         </div>
 
 
-        <!-- MENU -->
+        <p class="menu-title">
+            MENU
+        </p>
 
-        <nav class="navigation">
 
-            <h3>
-                Explore / Menu
-            </h3>
+        <nav class="menu">
 
-            <div class="menu">
+            <a href="index.html" class="active">
+                Dashboard
+            </a>
 
-                <a href="frontend/barang.html">
-                    Data Barang ↗
-                </a>
+            <a href="frontend/barang.html">
+                Data Barang
+            </a>
 
-                <a href="frontend/pelanggan.html">
-                    Data Pelanggan ↗
-                </a>
+            <a href="frontend/pelanggan.html">
+                Data Pelanggan
+            </a>
 
-                <a href="frontend/penjualan.html">
-                    Penjualan ↗
-                </a>
+            <a href="frontend/penjualan.html">
+                Data Penjualan
+            </a>
 
-            </div>
+            <a href="frontend/laporan.html">
+                Laporan
+            </a>
 
         </nav>
 
 
-        <!-- FOOTER -->
+        <div class="settings">
 
-        <footer class="footer">
+            <a href="#">
+                ⚙ &nbsp; Settings
+            </a>
 
-            <span>
-                THRIFTY — Accounting System
-            </span>
+        </div>
 
-            <span>
-                Designed for everyday business.
-            </span>
-
-        </footer>
-
-    </div>
+    </aside>
 
 
-    <!-- SUPABASE -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <main class="main">
 
-    <script src="frontend/js/supabase.js"></script>
-    <script src="frontend/js/dashboard.js"></script>
+        <div class="content">
+
+
+            <header class="top">
+
+                <div class="top-left">
+                    THRIFTY / Dashboard
+                </div>
+
+                <div class="top-right">
+                    Tembalang, Semarang · 2026
+                </div>
+
+            </header>
+
+
+
+            <section class="welcome">
+
+                <p class="welcome-label">
+                    Business overview
+                </p>
+
+                <h1>
+                    Good day, THRIFTYers.
+                </h1>
+
+                <p class="description">
+                    Kelola penjualan, persediaan, pelanggan, dan informasi
+                    keuangan bisnis THRIFTY dari satu tempat.
+                </p>
+
+                <p class="location">
+                    Based in Tembalang, Semarang
+                </p>
+
+
+                <div class="actions">
+
+                    <a href="frontend/barang.html">
+                        + Barang
+                    </a>
+
+                    <a href="frontend/pelanggan.html">
+                        + Pelanggan
+                    </a>
+
+                    <a href="frontend/penjualan.html" class="primary">
+                        + Penjualan
+                    </a>
+
+                </div>
+
+            </section>
+
+
+
+            <section>
+
+                <div class="section-title">
+
+                    <h2>
+                        Performance
+                    </h2>
+
+                    <span>
+                        Current overview
+                    </span>
+
+                </div>
+
+
+                <div class="kpi">
+
+                    <div class="kpi-card green">
+
+                        <span>
+                            Total omzet
+                        </span>
+
+                        <strong id="totalOmzet">
+                            Rp 0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="kpi-card">
+
+                        <span>
+                            Transaksi
+                        </span>
+
+                        <strong id="totalTransaksi">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="kpi-card">
+
+                        <span>
+                            Barang terjual
+                        </span>
+
+                        <strong id="barangTerjual">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="kpi-card">
+
+                        <span>
+                            Persediaan
+                        </span>
+
+                        <strong id="totalPersediaan">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="accounting">
+
+                    <div class="accounting-card">
+
+                        <span>
+                            Total HPP
+                        </span>
+
+                        <strong id="totalHPP">
+                            Rp 0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="accounting-card">
+
+                        <span>
+                            Laba kotor
+                        </span>
+
+                        <strong id="labaKotor">
+                            Rp 0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="accounting-card">
+
+                        <span>
+                            Margin laba
+                        </span>
+
+                        <strong id="marginLaba">
+                            0%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section class="panels">
+
+
+                <div class="panel">
+
+                    <div class="panel-title">
+
+                        <h2>
+                            Sales overview
+                        </h2>
+
+                        <span>
+                            Last 6 months
+                        </span>
+
+                    </div>
+
+
+                    <div class="chart">
+
+                        <div class="chart-item">
+                            <div class="chart-bar" style="height:35%;"></div>
+                            <span class="chart-month">May</span>
+                        </div>
+
+                        <div class="chart-item">
+                            <div class="chart-bar" style="height:55%;"></div>
+                            <span class="chart-month">Jun</span>
+                        </div>
+
+                        <div class="chart-item">
+                            <div class="chart-bar" style="height:45%;"></div>
+                            <span class="chart-month">Jul</span>
+                        </div>
+
+                        <div class="chart-item">
+                            <div class="chart-bar" style="height:75%;"></div>
+                            <span class="chart-month">Aug</span>
+                        </div>
+
+                        <div class="chart-item">
+                            <div class="chart-bar" style="height:62%;"></div>
+                            <span class="chart-month">Sep</span>
+                        </div>
+
+                        <div class="chart-item">
+                            <div class="chart-bar" style="height:90%;"></div>
+                            <span class="chart-month">Oct</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="panel">
+
+                    <div class="panel-title">
+
+                        <h2>
+                            Categories
+                        </h2>
+
+                        <span>
+                            Product mix
+                        </span>
+
+                    </div>
+
+
+                    <div class="category">
+
+                        <div class="category-row">
+                            <span>Tops</span>
+                            <div class="progress">
+                                <div style="width:78%;"></div>
+                            </div>
+                            <strong>78%</strong>
+                        </div>
+
+                        <div class="category-row">
+                            <span>Outerwear</span>
+                            <div class="progress">
+                                <div style="width:62%;"></div>
+                            </div>
+                            <strong>62%</strong>
+                        </div>
+
+                        <div class="category-row">
+                            <span>Bottoms</span>
+                            <div class="progress">
+                                <div style="width:48%;"></div>
+                            </div>
+                            <strong>48%</strong>
+                        </div>
+
+                        <div class="category-row">
+                            <span>Dress</span>
+                            <div class="progress">
+                                <div style="width:35%;"></div>
+                            </div>
+                            <strong>35%</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section class="lower">
+
+
+                <div class="panel">
+
+                    <div class="panel-title">
+
+                        <h2>
+                            Payment
+                        </h2>
+
+                        <span>
+                            Methods
+                        </span>
+
+                    </div>
+
+
+                    <div class="list">
+
+                        <div class="list-row">
+                            <span>Cash</span>
+                            <strong id="paymentCash">0</strong>
+                        </div>
+
+                        <div class="list-row">
+                            <span>Transfer</span>
+                            <strong id="paymentTransfer">0</strong>
+                        </div>
+
+                        <div class="list-row">
+                            <span>E-Wallet</span>
+                            <strong id="paymentWallet">0</strong>
+                        </div>
+
+                        <div class="list-row">
+                            <span>QRIS</span>
+                            <strong id="paymentQris">0</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="panel">
+
+                    <div class="panel-title">
+
+                        <h2>
+                            Inventory
+                        </h2>
+
+                        <span>
+                            Status
+                        </span>
+
+                    </div>
+
+
+                    <div class="list">
+
+                        <div class="list-row">
+                            <span>Total items</span>
+                            <strong id="totalItems">0</strong>
+                        </div>
+
+                        <div class="list-row">
+                            <span>Available</span>
+                            <strong id="availableItems">0</strong>
+                        </div>
+
+                        <div class="list-row">
+                            <span>Low stock</span>
+                            <strong id="lowStock">0</strong>
+                        </div>
+
+                        <div class="list-row">
+                            <span>Out of stock</span>
+                            <strong id="outStock">0</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="panel">
+
+                    <div class="panel-title">
+
+                        <h2>
+                            Top products
+                        </h2>
+
+                        <span>
+                            Units sold
+                        </span>
+
+                    </div>
+
+
+                    <div class="list">
+
+                        <div class="list-row">
+                            <span>Produk terlaris</span>
+                            <strong>—</strong>
+                        </div>
+
+                        <div class="list-row">
+                            <span>Produk kedua</span>
+                            <strong>—</strong>
+                        </div>
+
+                        <div class="list-row">
+                            <span>Produk ketiga</span>
+                            <strong>—</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <section class="panel recent">
+
+                <div class="panel-title">
+
+                    <h2>
+                        Recent transactions
+                    </h2>
+
+                    <span>
+                        Latest activity
+                    </span>
+
+                </div>
+
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Pelanggan</th>
+                                <th>Barang</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="recentTransactions">
+
+                            <tr>
+                                <td colspan="5">
+                                    Belum ada transaksi.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <footer>
+
+                <span>
+                    THRIFTY · Tembalang, Semarang
+                </span>
+
+                <span>
+                    Version 1.0 · 2026
+                </span>
+
+            </footer>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="frontend/js/supabase.js"></script>
+<script src="frontend/js/dashboard.js"></script>
 
 </body>
 

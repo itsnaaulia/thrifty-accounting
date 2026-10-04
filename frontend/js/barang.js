@@ -1,189 +1,354 @@
-// mengambil form dari halaman barang.html
-const formBarang = document.getElementById("formBarang");
-
-// mengambil tabel untuk menampilkan data
-const tabelBarang = document.getElementById("tabelBarang");
+let semuaBarang = [];
 
 
-// ===============================
-// MENAMBAH DATA BARANG
-// ===============================
-
-formBarang.addEventListener("submit", async function (event) {
-
-    // mencegah halaman reload
-    event.preventDefault();
-
-    // mengambil isi form
-    const kode_barang = document.getElementById("kode_barang").value;
-    const nama_barang = document.getElementById("nama_barang").value;
-    const kategori = document.getElementById("kategori").value;
-    const harga_beli = document.getElementById("harga_beli").value;
-    const harga_jual = document.getElementById("harga_jual").value;
-    const stok = document.getElementById("stok").value;
-
-    // memasukkan data ke Supabase
-    const { data, error } = await supabaseClient
-        .from("barang")
-        .insert([
-            {
-                kode_barang: kode_barang,
-                nama_barang: nama_barang,
-                kategori: kategori,
-                harga_beli: harga_beli,
-                harga_jual: harga_jual,
-                stok: stok
-            }
-        ])
-        .select();
-
-    // kalau terjadi error
-    if (error) {
-        console.error("Error:", error);
-        alert("❌ Gagal menambahkan barang.");
-        return;
-    }
-
-    // kalau berhasil
-    alert("✅ Barang berhasil ditambahkan!");
-
-    // kosongkan form
-    formBarang.reset();
-
-    // tampilkan data terbaru
-    tampilkanBarang();
-});
-
-
-// ===============================
-// MENAMPILKAN DATA BARANG
-// ===============================
+// AMBIL DATA BARANG DARI SUPABASE
 
 async function tampilkanBarang() {
 
     const { data, error } = await supabaseClient
         .from("barang")
         .select("*")
-        .order("id", { ascending: false });
+        .order("id", { ascending: true });
+
 
     if (error) {
-        console.error("Error:", error);
-        tabelBarang.innerHTML =
-            "<tr><td colspan='6'>❌ Gagal mengambil data.</td></tr>";
+
+        console.error(
+            "Error mengambil data barang:",
+            error
+        );
+
+        tampilkanPesanKosong(
+            "Collection unavailable",
+            "Data barang belum bisa dimuat."
+        );
+
         return;
     }
 
-    // kalau belum ada data
+
+    semuaBarang = data || [];
+
+    filterBarang();
+}
+
+
+
+// TAMPILKAN PRODUCT CARD
+
+function tampilkanDataBarang(data) {
+
+    const grid =
+        document.getElementById("productGrid");
+
+
+    const jumlah =
+        document.getElementById("jumlahBarang");
+
+
+    grid.innerHTML = "";
+
+
+    jumlah.textContent =
+        data.length + (data.length === 1 ? " piece" : " pieces");
+
+
     if (data.length === 0) {
-        tabelBarang.innerHTML =
-            "<tr><td colspan='6'>Belum ada data barang.</td></tr>";
+
+        tampilkanPesanKosong(
+            "No pieces found",
+            "Coba cari dengan kata kunci atau kategori lain."
+        );
+
         return;
     }
 
-    // mengosongkan tabel
-    tabelBarang.innerHTML = "";
 
-    // memasukkan setiap barang ke tabel
     data.forEach(function (barang) {
 
-        const baris = `
-    <tr>
-        <td>${barang.kode_barang}</td>
-        <td>${barang.nama_barang}</td>
-        <td>${barang.kategori}</td>
-        <td>Rp ${Number(barang.harga_beli).toLocaleString("id-ID")}</td>
-        <td>Rp ${Number(barang.harga_jual).toLocaleString("id-ID")}</td>
-        <td>${barang.stok}</td>
-        <td>
-            <button onclick="editBarang(${barang.id})">Edit</button>
-            <button onclick="hapusBarang(${barang.id})">Hapus</button>
-        </td>
-    </tr>
-`;
 
-        tabelBarang.innerHTML += baris;
+        const card =
+            document.createElement("article");
+
+
+        card.className =
+            "product-card";
+
+
+        const stok =
+            Number(barang.stok);
+
+
+        let statusText = "Available";
+        let statusClass = "";
+
+
+        if (stok === 0) {
+
+            statusText = "Sold Out";
+            statusClass = "sold";
+
+        } else if (stok === 1) {
+
+            statusText = "Only 1 left";
+
+        } else if (stok <= 3) {
+
+            statusText = "Low stock";
+
+        }
+
+
+        let stockText;
+
+
+        if (stok === 0) {
+
+            stockText = "Sold out";
+
+        } else if (stok === 1) {
+
+            stockText = "1 piece left";
+
+        } else {
+
+            stockText = stok + " pieces";
+
+        }
+
+
+        const harga =
+            Number(barang.harga_jual)
+                .toLocaleString("id-ID");
+
+
+        card.innerHTML = `
+
+            <div class="product-image">
+
+                <div class="product-image-placeholder">
+
+                    THRIFTY
+
+                    <small>
+                        Pre-loved piece
+                    </small>
+
+                </div>
+
+
+                <div class="stock-badge ${statusClass}">
+                    ${statusText}
+                </div>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <p class="product-category">
+                    ${barang.kategori || "Fashion"}
+                </p>
+
+
+                <h3 class="product-name">
+                    ${barang.nama_barang}
+                </h3>
+
+
+                <p class="product-condition">
+                    Pre-loved · Carefully selected
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <p class="product-price">
+                        Rp ${harga}
+                    </p>
+
+
+                    <span class="product-stock">
+                        ${stockText}
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-button"
+                    onclick="lihatProduk(${barang.id})"
+                >
+                    View piece
+                </button>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
     });
+
 }
 
 
-// ===============================
-// MENJALANKAN SAAT HALAMAN DIBUKA
-// ===============================
+
+// FILTER BARANG
+
+function filterBarang() {
+
+    const input =
+        document.getElementById("cariBarang");
+
+
+    const select =
+        document.getElementById("filterKategori");
+
+
+    const kataKunci =
+        input.value
+            .toLowerCase()
+            .trim();
+
+
+    const kategoriDipilih =
+        select.value;
+
+
+    const hasilFilter =
+        semuaBarang.filter(function (barang) {
+
+
+            const nama =
+                (barang.nama_barang || "")
+                    .toLowerCase();
+
+
+            const kode =
+                (barang.kode_barang || "")
+                    .toLowerCase();
+
+
+            const kategori =
+                barang.kategori || "";
+
+
+            const cocokKataKunci =
+                nama.includes(kataKunci) ||
+                kode.includes(kataKunci);
+
+
+            const cocokKategori =
+                kategoriDipilih === "" ||
+                kategori === kategoriDipilih;
+
+
+            return (
+                cocokKataKunci &&
+                cocokKategori
+            );
+
+        });
+
+
+    tampilkanDataBarang(hasilFilter);
+
+}
+
+
+
+// PESAN KOSONG
+
+function tampilkanPesanKosong(
+    judul,
+    pesan
+) {
+
+    const grid =
+        document.getElementById("productGrid");
+
+
+    grid.innerHTML = `
+
+        <div class="empty">
+
+            <h3>
+                ${judul}
+            </h3>
+
+            <p>
+                ${pesan}
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+
+// DETAIL PRODUK
+
+function lihatProduk(id) {
+
+    const barang =
+        semuaBarang.find(function (item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!barang) {
+        return;
+    }
+
+
+    const harga =
+        Number(barang.harga_jual)
+            .toLocaleString("id-ID");
+
+
+    alert(
+        "THRIFTY\n\n" +
+        barang.nama_barang +
+        "\n" +
+        barang.kategori +
+        "\n\n" +
+        "Harga: Rp " + harga +
+        "\n" +
+        "Stok: " + barang.stok
+    );
+
+}
+
+
+
+// EVENT SEARCH
+
+document
+    .getElementById("cariBarang")
+    .addEventListener(
+        "input",
+        filterBarang
+    );
+
+
+
+// EVENT FILTER
+
+document
+    .getElementById("filterKategori")
+    .addEventListener(
+        "change",
+        filterBarang
+    );
+
+
+
+// JALANKAN
 
 tampilkanBarang();
-async function editBarang(id) {
-
-    const { data: barang, error } = await supabaseClient
-        .from("barang")
-        .select("*")
-        .eq("id", id)
-        .single();
-
-    if (error) {
-        console.error("Error:", error);
-        alert("❌ Gagal mengambil data barang.");
-        return;
-    }
-
-    const namaBaru = prompt("Nama barang:", barang.nama_barang);
-
-    if (namaBaru === null) return;
-
-    const kategoriBaru = prompt("Kategori:", barang.kategori);
-
-    if (kategoriBaru === null) return;
-
-    const hargaBeliBaru = prompt("Harga beli:", barang.harga_beli);
-
-    if (hargaBeliBaru === null) return;
-
-    const hargaJualBaru = prompt("Harga jual:", barang.harga_jual);
-
-    if (hargaJualBaru === null) return;
-
-    const stokBaru = prompt("Stok:", barang.stok);
-
-    if (stokBaru === null) return;
-
-    const { error: updateError } = await supabaseClient
-        .from("barang")
-        .update({
-            nama_barang: namaBaru,
-            kategori: kategoriBaru,
-            harga_beli: Number(hargaBeliBaru),
-            harga_jual: Number(hargaJualBaru),
-            stok: Number(stokBaru)
-        })
-        .eq("id", id);
-
-    if (updateError) {
-        console.error("Error:", updateError);
-        alert("❌ Gagal mengubah barang.");
-        return;
-    }
-
-    alert("✅ Barang berhasil diubah!");
-
-    tampilkanBarang();
-}
-async function hapusBarang(id) {
-
-    const yakin = confirm("Yakin ingin menghapus barang ini?");
-
-    if (!yakin) return;
-
-    const { error } = await supabaseClient
-        .from("barang")
-        .delete()
-        .eq("id", id);
-
-    if (error) {
-        console.error("Error:", error);
-        alert("❌ Gagal menghapus barang.");
-        return;
-    }
-
-    alert("✅ Barang berhasil dihapus!");
-
-    tampilkanBarang();
-}

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laporan | THRIFTY</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f1efe9;
+            color: #292b27;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        header {
+            padding: 45px 0 30px;
+            border-bottom: 1px solid #c9cbc3;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            width: 42px;
+            height: 42px;
+            border: 1px solid #292b27;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Bodoni Moda", serif;
+            font-size: 20px;
+        }
+
+        .brand-name {
+            font-family: "Bodoni Moda", serif;
+            font-size: 25px;
+            letter-spacing: 1px;
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: #6d7068;
+            margin-top: 3px;
+        }
+
+        .year {
+            font-size: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+            margin-top: 28px;
+        }
+
+        nav a {
+            color: #292b27;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .intro {
+            padding: 55px 0 40px;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #777a72;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-family: "Bodoni Moda", serif;
+            font-size: 48px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666960;
+            max-width: 600px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-family: "Bodoni Moda", serif;
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .card {
+            background: #e2e5dc;
+            padding: 25px;
+            min-height: 130px;
+        }
+
+        .card-label {
+            font-size: 11px;
+            color: #686b63;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .card-value {
+            font-family: "Bodoni Moda", serif;
+            font-size: 25px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f7f5f0;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #d5d6d0;
+            font-size: 13px;
+        }
+
+        th {
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: #686b63;
+            text-transform: uppercase;
+        }
+
+        footer {
+            border-top: 1px solid #c9cbc3;
+            padding: 25px 0 40px;
+            color: #777a72;
+            font-size: 11px;
+        }
+
+        @media (max-width: 700px) {
+
+            .container {
+                width: 88%;
+            }
+
+            .header-top {
+                align-items: flex-start;
+            }
+
+            nav {
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+
+            <div class="header-top">
+
+                <div class="brand">
+
+                    <div class="logo">T</div>
+
+                    <div>
+                        <div class="brand-name">THRIFTY</div>
+                        <div class="brand-subtitle">
+                            Sales & Accounting System
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="year">
+                    REPORT / 2026
+                </div>
+
+            </div>
+
+            <nav>
+                <a href="../index.html">Dashboard</a>
+                <a href="barang.html">Data Barang</a>
+                <a href="pelanggan.html">Data Pelanggan</a>
+                <a href="penjualan.html">Penjualan</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <section class="intro">
+
+            <div class="eyebrow">
+                05 / Laporan
+            </div>
+
+            <h1>Laporan.</h1>
+
+            <p>
+                Ringkasan penjualan, persediaan, dan kinerja laba
+                dari aktivitas operasional THRIFTY.
+            </p>
+
+        </section>
+
+
+        <section>
+
+            <h2 class="section-title">
+                Ringkasan Penjualan
+            </h2>
+
+            <div class="report-grid">
+
+                <div class="card">
+                    <div class="card-label">
+                        Total Omzet
+                    </div>
+
+                    <div class="card-value" id="laporanOmzet">
+                        Rp 0
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-label">
+                        Total Transaksi
+                    </div>
+
+                    <div class="card-value" id="laporanTransaksi">
+                        0
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-label">
+                        Barang Terjual
+                    </div>
+
+                    <div class="card-value" id="laporanBarangTerjual">
+                        0
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-label">
+                        Total HPP
+                    </div>
+
+                    <div class="card-value" id="laporanHPP">
+                        Rp 0
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-label">
+                        Laba Kotor
+                    </div>
+
+                    <div class="card-value" id="laporanLaba">
+                        Rp 0
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-label">
+                        Margin Laba
+                    </div>
+
+                    <div class="card-value" id="laporanMargin">
+                        0%
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section>
+
+            <h2 class="section-title">
+                Detail Penjualan
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Harga Jual</th>
+                            <th>HPP</th>
+                            <th>Laba Kotor</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tabelLaporan">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="container">
+            THRIFTY — Sales & Accounting System
+        </div>
+
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/supabase.js"></script>
+
+    <script src="js/laporan.js"></script>
+
+</body>
+
+</html>

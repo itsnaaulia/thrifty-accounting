@@ -1,18 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="id">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>THRIFTY — Penjualan</title>
 
     <!-- Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -267,8 +274,11 @@
             .footer {
                 flex-direction: column;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
@@ -280,8 +290,11 @@
         <header class="header">
 
             <div>
+
                 <h1 class="brand">THRIFTY</h1>
+
                 <p class="subtitle">Sales & Accounting System</p>
+
             </div>
 
             <div class="header-label">
@@ -294,7 +307,7 @@
 
         <nav class="navigation">
 
-            <a href="index.html">Dashboard</a>
+            <a href="../index.html">Dashboard</a>
 
             <a href="barang.html">Data Barang</a>
 
@@ -373,6 +386,32 @@
                     readonly
                 >
 
+                <label>Metode Pembayaran</label>
+
+                <select id="metodePembayaran" required>
+
+                    <option value="">
+                        -- Pilih Metode Pembayaran --
+                    </option>
+
+                    <option value="Cash">
+                        Cash
+                    </option>
+
+                    <option value="Transfer">
+                        Transfer
+                    </option>
+
+                    <option value="E-Wallet">
+                        E-Wallet
+                    </option>
+
+                    <option value="QRIS">
+                        QRIS
+                    </option>
+
+                </select>
+
                 <button type="submit">
                     Simpan Penjualan
                 </button>
@@ -396,13 +435,21 @@
                     <thead>
 
                         <tr>
+
                             <th>Tanggal</th>
+
                             <th>Pelanggan</th>
+
                             <th>Barang</th>
+
                             <th>Qty</th>
+
                             <th>Harga Jual</th>
+
                             <th>HPP</th>
+
                             <th>Laba Kotor</th>
+
                         </tr>
 
                     </thead>
@@ -410,9 +457,11 @@
                     <tbody id="tabelPenjualan">
 
                         <tr>
+
                             <td colspan="7">
                                 Belum ada transaksi.
                             </td>
+
                         </tr>
 
                     </tbody>

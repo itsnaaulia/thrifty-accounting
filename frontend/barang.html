@@ -2,18 +2,16 @@
 <html lang="id">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>THRIFTY — Data Barang</title>
+    <title>THRIFTY — Collection</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=DM+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
 
@@ -23,589 +21,749 @@
 
         body {
             margin: 0;
-            padding: 40px;
-            background: #f1efe9;
+            background: #f4f2ed;
             color: #292b27;
-            font-family: 'DM Sans', sans-serif;
+            font-family: "DM Sans", sans-serif;
         }
 
-        .container {
-            max-width: 1120px;
-            margin: auto;
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
-        /* HEADER */
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
 
-        .header {
+        /* NAVBAR */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            padding-bottom: 25px;
-            border-bottom: 1px solid #d9d6ce;
-            margin-bottom: 35px;
-            gap: 20px;
-        }
 
-        .brand-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+            padding: 18px 6%;
 
-        .logo {
-            width: 48px;
-            height: 48px;
-            border: 1.5px solid #292b27;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bodoni Moda', serif;
-            font-size: 18px;
-            font-weight: 600;
+            background: rgba(244, 242, 237, 0.95);
+            border-bottom: 1px solid #ddd9d0;
         }
 
         .brand {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 36px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .subtitle {
-            color: #85847c;
-            font-size: 11px;
-            letter-spacing: 2px;
-            margin: 4px 0 0;
+        .logo {
+            width: 35px;
+            height: 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #292b27;
+            border-radius: 50%;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: 15px;
+        }
+
+        .brand-name {
+            margin: 0;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: 21px;
+        }
+
+        .brand-location {
+            margin: 2px 0 0;
+
+            color: #292b27;
+            font-size: 7px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
         }
 
-        .header-label {
-            color: #666b60;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            border: 1px solid #c9c8be;
-            padding: 10px 14px;
-        }
-
-        /* NAVIGATION */
-
-        .navigation {
+        .nav-links {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 35px;
+            align-items: center;
+            gap: 25px;
         }
 
-        .navigation a {
-            display: inline-block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #526052;
-            background: #dce2d7;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            transition: all 0.2s ease;
+        .nav-links a {
+            color: #292b27;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .navigation a:hover {
-            background: #292b27;
-            color: white;
+        .nav-links a.active {
+            padding-bottom: 5px;
+            border-bottom: 1px solid #292b27;
         }
 
-        /* SECTION TITLE */
+        /* HERO */
 
-        .section-header {
-            margin-bottom: 22px;
+        .hero {
+            max-width: 1150px;
+            margin: auto;
+            padding: 75px 30px 55px;
         }
 
         .eyebrow {
-            color: #7b8175;
-            font-size: 10px;
+            margin: 0 0 15px;
+
+            color: #697465;
+            font-size: 8px;
             font-weight: 700;
             letter-spacing: 2.5px;
             text-transform: uppercase;
-            margin: 0 0 9px;
         }
 
-        .section-header h2 {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 32px;
-            font-weight: 500;
-            margin: 0 0 7px;
-        }
-
-        .section-header p {
-            color: #85847c;
-            font-size: 13px;
+        .hero h1 {
+            max-width: 750px;
             margin: 0;
-        }
 
-        /* CARD */
-
-        .card {
-            background: #faf9f6;
-            padding: 28px;
-            border: 1px solid #e4e1d9;
-            border-radius: 5px;
-            box-shadow: 0 5px 18px rgba(47, 60, 46, 0.04);
-            margin-bottom: 25px;
-        }
-
-        .card-title {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 23px;
+            font-family: "Bodoni Moda", serif;
+            font-size: clamp(40px, 6vw, 72px);
             font-weight: 500;
-            margin: 0 0 25px;
+            line-height: 1;
         }
 
-        /* FORM */
+        .hero-description {
+            max-width: 550px;
+            margin: 25px 0 0;
 
-        label {
-            display: block;
-            color: #666b60;
-            font-size: 10px;
+            color: #292b27;
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .hero-location {
+            margin-top: 15px;
+
+            color: #697465;
+            font-size: 8px;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-bottom: 7px;
         }
 
-        input,
-        select {
+        /* TOOLBAR */
+
+        .catalogue {
+            max-width: 1150px;
+            margin: auto;
+            padding: 0 30px 70px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+
+            padding: 18px 0;
+
+            border-top: 1px solid #d8d5cd;
+            border-bottom: 1px solid #d8d5cd;
+        }
+
+        .search {
+            position: relative;
+            width: 280px;
+        }
+
+        .search input {
             width: 100%;
-            padding: 12px 14px;
-            margin-bottom: 18px;
-            border: 1px solid #d9d6ce;
-            border-radius: 4px;
-            background: #fff;
+
+            padding: 11px 14px;
+
+            background: #faf9f6;
+            border: 1px solid #d5d1c8;
+            border-radius: 2px;
+
             color: #292b27;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 13px;
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: #71806f;
-        }
-
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            background: #292b27;
-            color: white;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        button:hover {
-            background: #4b574b;
-        }
-
-        /* TABLE */
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            min-width: 750px;
-        }
-
-        th {
-            background: #dce2d7;
-            color: #4d5a4d;
             font-size: 10px;
+
+            outline: none;
+        }
+
+        .search input:focus {
+            border-color: #292b27;
+        }
+
+        .search input::placeholder {
+            color: #777870;
+        }
+
+        .filter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter label {
+            color: #292b27;
+            font-size: 8px;
+            font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
+        }
+
+        .filter select {
+            padding: 10px 28px 10px 11px;
+
+            background: #faf9f6;
+            border: 1px solid #d5d1c8;
+            border-radius: 2px;
+
+            color: #292b27;
+            font-size: 9px;
+            outline: none;
+        }
+
+        /* RESULT */
+
+        .result-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin: 25px 0 18px;
+        }
+
+        .result-info h2 {
+            margin: 0;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .result-info span {
+            color: #292b27;
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* PRODUCT GRID */
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        /* PRODUCT CARD */
+
+        .product-card {
+            position: relative;
+
+            background: #faf9f6;
+            border: 1px solid #dedbd3;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 30px rgba(41, 43, 39, 0.08);
+        }
+
+        .product-image {
+            position: relative;
+
+            width: 100%;
+            aspect-ratio: 4 / 5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e5e2da;
+
+            overflow: hidden;
+        }
+
+        .product-image-placeholder {
+            color: #8b8b82;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .product-image-placeholder small {
+            display: block;
+
+            margin-top: 5px;
+
+            font-family: "DM Sans", sans-serif;
+            font-size: 7px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .stock-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+
+            padding: 6px 8px;
+
+            background: #292b27;
+            color: #f4f2ed;
+
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .stock-badge.sold {
+            background: #aaa9a2;
+        }
+
+        .product-info {
+            padding: 17px;
+        }
+
+        .product-category {
+            margin: 0 0 7px;
+
+            color: #697465;
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .product-name {
+            min-height: 42px;
+            margin: 0;
+
+            color: #292b27;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: 17px;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .product-condition {
+            margin: 8px 0 15px;
+
+            color: #292b27;
+            font-size: 8px;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            padding-top: 12px;
+
+            border-top: 1px solid #e0ddd5;
+        }
+
+        .product-price {
+            margin: 0;
+
+            color: #292b27;
+            font-size: 14px;
             font-weight: 700;
         }
 
-        th,
-        td {
-            padding: 14px 12px;
-            text-align: left;
-            border-bottom: 1px solid #e5e2da;
+        .product-stock {
+            color: #292b27;
+            font-size: 7px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-align: right;
         }
 
-        td {
-            color: #555850;
+        .view-button {
+            width: 100%;
+
+            margin-top: 13px;
+            padding: 10px;
+
+            background: transparent;
+            border: 1px solid #292b27;
+
+            color: #292b27;
+
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+
+            cursor: pointer;
         }
 
-        td button {
-            padding: 7px 10px;
-            margin-right: 4px;
+        .view-button:hover {
+            background: #292b27;
+            color: #f4f2ed;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            grid-column: 1 / -1;
+
+            padding: 80px 20px;
+
+            border: 1px dashed #c9c6bd;
+
+            text-align: center;
+        }
+
+        .empty h3 {
+            margin: 0 0 8px;
+
+            font-family: "Bodoni Moda", serif;
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        .empty p {
+            margin: 0;
+
+            color: #292b27;
             font-size: 10px;
         }
 
         /* FOOTER */
 
-        .footer {
+        footer {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-            color: #929188;
-            font-size: 10px;
+
+            max-width: 1150px;
+            margin: auto;
+            padding: 25px 30px 35px;
+
+            border-top: 1px solid #d8d5cd;
+
+            color: #292b27;
+            font-size: 7px;
             letter-spacing: 1px;
-            margin-top: 25px;
             text-transform: uppercase;
         }
 
-        /* MOBILE */
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
 
         @media (max-width: 700px) {
 
-            body {
-                padding: 25px 16px;
+            .navbar {
+                padding: 15px 20px;
             }
 
-            .header {
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 7px;
+            }
+
+            .hero {
+                padding: 50px 20px 40px;
+            }
+
+            .catalogue {
+                padding: 0 20px 50px;
+            }
+
+            .toolbar {
+                align-items: stretch;
                 flex-direction: column;
-                align-items: flex-start;
             }
 
-            .brand-area {
+            .search {
+                width: 100%;
+            }
+
+            .filter {
+                justify-content: space-between;
+            }
+
+            .filter select {
+                flex: 1;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
 
-            .logo {
-                width: 40px;
-                height: 40px;
-                font-size: 15px;
+            .product-info {
+                padding: 13px;
             }
 
-            .brand {
-                font-size: 29px;
+            .product-name {
+                font-size: 14px;
             }
 
-            .section-header h2 {
-                font-size: 28px;
+            .product-price {
+                font-size: 12px;
             }
 
-            .card {
-                padding: 22px;
+            footer {
+                display: block;
+                line-height: 2;
             }
 
-            .footer {
-                flex-direction: column;
+        }
+
+        @media (max-width: 420px) {
+
+            .brand-subtitle {
+                display: none;
             }
+
+            .nav-links a:nth-child(3),
+            .nav-links a:nth-child(4) {
+                display: none;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
         }
 
     </style>
 
 </head>
 
+
 <body>
 
-    <div class="container">
 
-        <!-- HEADER -->
+<!-- NAVBAR -->
 
-        <header class="header">
+<header class="navbar">
 
-            <div class="brand-area">
+    <a href="../index.html" class="brand">
 
-                <div class="logo">
-                    T
-                </div>
+        <div class="logo">
+            T
+        </div>
 
-                <div>
+        <div>
 
-                    <h1 class="brand">
-                        THRIFTY
-                    </h1>
+            <h1 class="brand-name">
+                THRIFTY
+            </h1>
 
-                    <p class="subtitle">
-                        Sales & Accounting System
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="header-label">
-                INVENTORY / 2026
-            </div>
-
-        </header>
-
-
-        <!-- NAVIGATION -->
-
-        <nav class="navigation">
-
-            <a href="index.html">
-                Dashboard
-            </a>
-
-            <a href="pelanggan.html">
-                Data Pelanggan
-            </a>
-
-            <a href="penjualan.html">
-                Penjualan
-            </a>
-
-        </nav>
-
-
-        <!-- TITLE -->
-
-        <section class="section-header">
-
-            <p class="eyebrow">
-                02 / Inventory
+            <p class="brand-location">
+                Tembalang, Semarang
             </p>
 
-            <h2>
-                Product management.
-            </h2>
+        </div>
 
-            <p>
-                Kelola produk, harga, kategori, dan stok THRIFTY.
-            </p>
-
-        </section>
+    </a>
 
 
-        <!-- FORM -->
+    <nav class="nav-links">
 
-        <div class="card">
+        <a href="../index.html">
+            Dashboard
+        </a>
 
-            <h3 class="card-title">
-                Add new product
-            </h3>
+        <a href="barang.html" class="active">
+            Collection
+        </a>
 
-            <form id="formBarang">
+        <a href="pelanggan.html">
+            Customer
+        </a>
 
-                <label>
-                    Kode Barang
-                </label>
+        <a href="penjualan.html">
+            Sales
+        </a>
 
-                <input
-                    type="text"
-                    id="kode_barang"
-                    placeholder="Contoh: TH003"
-                    required
-                >
+    </nav>
 
-
-                <label>
-                    Nama Barang
-                </label>
-
-                <input
-                    type="text"
-                    id="nama_barang"
-                    placeholder="Contoh: Kemeja Linen"
-                    required
-                >
+</header>
 
 
-                <label>
-                    Kategori
-                </label>
 
-                <select id="kategori" required>
+<!-- HERO -->
 
-                    <option value="">
-                        -- Pilih Kategori --
-                    </option>
+<section class="hero">
 
-                    <option value="Atasan">
-                        Atasan
-                    </option>
+    <p class="eyebrow">
+        THRIFTY Collection
+    </p>
 
-                    <option value="Bawahan">
-                        Bawahan
-                    </option>
+    <h1>
+        Find your next<br>
+        favorite piece.
+    </h1>
 
-                    <option value="Outer">
-                        Outer
-                    </option>
+    <p class="hero-description">
+        Pilihan fashion pre-loved yang dikurasi untuk kamu.
+        Temukan pakaian dan fashion items pilihan THRIFTY
+        yang masih layak pakai dan siap menemukan pemilik baru.
+    </p>
 
-                    <option value="Dress">
-                        Dress
-                    </option>
+    <p class="hero-location">
+        Tembalang · Semarang
+    </p>
 
-                    <option value="Jumpsuit">
-                        Jumpsuit
-                    </option>
-
-                    <option value="Hijab">
-                        Hijab
-                    </option>
-
-                    <option value="Tas">
-                        Tas
-                    </option>
-
-                    <option value="Topi">
-                        Topi
-                    </option>
-
-                    <option value="Belt">
-                        Belt
-                    </option>
-
-                    <option value="Scarf">
-                        Scarf
-                    </option>
-
-                </select>
+</section>
 
 
-                <label>
-                    Harga Beli
-                </label>
 
-                <input
-                    type="number"
-                    id="harga_beli"
-                    placeholder="Contoh: 50000"
-                    min="0"
-                    required
-                >
+<!-- CATALOGUE -->
+
+<main class="catalogue">
 
 
-                <label>
-                    Harga Jual
-                </label>
+    <!-- SEARCH + FILTER -->
 
-                <input
-                    type="number"
-                    id="harga_jual"
-                    placeholder="Contoh: 90000"
-                    min="0"
-                    required
-                >
+    <div class="toolbar">
 
+        <div class="search">
 
-                <label>
-                    Stok
-                </label>
-
-                <input
-                    type="number"
-                    id="stok"
-                    placeholder="Contoh: 5"
-                    min="0"
-                    required
-                >
-
-
-                <button type="submit">
-                    Tambah Barang
-                </button>
-
-            </form>
+            <input
+                type="text"
+                id="cariBarang"
+                placeholder="Search your next piece..."
+            >
 
         </div>
 
 
-        <!-- TABLE -->
+        <div class="filter">
 
-        <div class="card">
+            <label for="filterKategori">
+                Category
+            </label>
 
-            <h3 class="card-title">
-                Product inventory
-            </h3>
+            <select id="filterKategori">
 
-            <div class="table-wrapper">
+                <option value="">
+                    All pieces
+                </option>
 
-                <table>
+                <option value="Hijab">
+                    Hijab
+                </option>
 
-                    <thead>
+                <option value="Jaket">
+                    Jaket
+                </option>
 
-                        <tr>
+                <option value="Tops">
+                    Tops
+                </option>
 
-                            <th>
-                                Kode
-                            </th>
+                <option value="Bottoms">
+                    Bottoms
+                </option>
 
-                            <th>
-                                Nama
-                            </th>
+                <option value="Dress">
+                    Dress
+                </option>
 
-                            <th>
-                                Kategori
-                            </th>
+                <option value="Outerwear">
+                    Outerwear
+                </option>
 
-                            <th>
-                                Harga Beli
-                            </th>
-
-                            <th>
-                                Harga Jual
-                            </th>
-
-                            <th>
-                                Stok
-                            </th>
-
-                            <th>
-                                Aksi
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="tabelBarang">
-
-                        <tr>
-
-                            <td colspan="7">
-                                Belum ada data barang.
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
+            </select>
 
         </div>
-
-
-        <!-- FOOTER -->
-
-        <footer class="footer">
-
-            <span>
-                THRIFTY — Accounting System
-            </span>
-
-            <span>
-                Inventory Management
-            </span>
-
-        </footer>
 
     </div>
 
 
-    <!-- SUPABASE -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- RESULT -->
 
-    <script src="js/supabase.js"></script>
+    <div class="result-info">
 
-    <script src="js/barang.js"></script>
+        <h2>
+            Available pieces
+        </h2>
+
+        <span id="jumlahBarang">
+            0 pieces
+        </span>
+
+    </div>
+
+
+
+    <!-- PRODUCT -->
+
+    <div
+        class="product-grid"
+        id="productGrid"
+    >
+
+        <div class="empty">
+
+            <h3>
+                Loading collection...
+            </h3>
+
+            <p>
+                Tunggu sebentar ya.
+            </p>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+
+<footer>
+
+    <span>
+        THRIFTY · Tembalang, Semarang
+    </span>
+
+    <span>
+        Pre-loved with purpose
+    </span>
+
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/barang.js"></script>
 
 </body>
 

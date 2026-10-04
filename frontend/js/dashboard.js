@@ -1,49 +1,102 @@
 async function tampilkanDashboard() {
 
-    const { data, error } = await supabaseClient
-        .from("detail_penjualan")
-        .select("qty, harga_jual, harga_beli");
+    const { data: barang, error: errorBarang } = await supabaseClient
+        .from("barang")
+        .select("*");
 
-    if (error) {
-        console.error("Error mengambil data dashboard:", error);
+    if (errorBarang) {
+        console.error("Error mengambil data barang:", errorBarang);
+        return;
+    }
+
+    const { data: detailPenjualan, error: errorPenjualan } =
+        await supabaseClient
+            .from("detail_penjualan")
+            .select("*");
+
+    if (errorPenjualan) {
+        console.error("Error mengambil data penjualan:", errorPenjualan);
         return;
     }
 
     let totalOmzet = 0;
-    let totalTransaksi = 0;
     let barangTerjual = 0;
     let totalHPP = 0;
     let labaKotor = 0;
+    let totalPersediaan = 0;
 
-    data.forEach(function (detail) {
+    let totalItems = barang.length;
+    let availableItems = 0;
+    let lowStock = 0;
+    let outStock = 0;
 
-        totalOmzet += Number(detail.harga_jual) * Number(detail.qty);
+    detailPenjualan.forEach(function (detail) {
 
-        barangTerjual += Number(detail.qty);
+        const qty = Number(detail.qty);
+        const hargaJual = Number(detail.harga_jual);
+        const hargaBeli = Number(detail.harga_beli);
 
-        totalHPP += Number(detail.harga_beli) * Number(detail.qty);
-
-        labaKotor +=
-            (Number(detail.harga_jual) - Number(detail.harga_beli))
-            * Number(detail.qty);
+        totalOmzet += hargaJual * qty;
+        barangTerjual += qty;
+        totalHPP += hargaBeli * qty;
+        labaKotor += (hargaJual - hargaBeli) * qty;
     });
 
-    totalTransaksi = data.length;
+    barang.forEach(function (item) {
+
+        const stok = Number(item.stok);
+
+        totalPersediaan += stok;
+
+        if (stok > 0) {
+            availableItems++;
+        }
+
+        if (stok > 0 && stok <= 2) {
+            lowStock++;
+        }
+
+        if (stok === 0) {
+            outStock++;
+        }
+    });
+
+    const marginLaba = totalOmzet > 0
+        ? (labaKotor / totalOmzet) * 100
+        : 0;
 
     document.getElementById("totalOmzet").textContent =
         "Rp " + totalOmzet.toLocaleString("id-ID");
 
     document.getElementById("totalTransaksi").textContent =
-        totalTransaksi;
+        detailPenjualan.length;
 
     document.getElementById("barangTerjual").textContent =
         barangTerjual;
+
+    document.getElementById("totalPersediaan").textContent =
+        totalPersediaan;
 
     document.getElementById("totalHPP").textContent =
         "Rp " + totalHPP.toLocaleString("id-ID");
 
     document.getElementById("labaKotor").textContent =
         "Rp " + labaKotor.toLocaleString("id-ID");
+
+    document.getElementById("marginLaba").textContent =
+        marginLaba.toFixed(1) + "%";
+
+    document.getElementById("totalItems").textContent =
+        totalItems;
+
+    document.getElementById("availableItems").textContent =
+        availableItems;
+
+    document.getElementById("lowStock").textContent =
+        lowStock;
+
+    document.getElementById("outStock").textContent =
+        outStock;
 }
 
 tampilkanDashboard();
