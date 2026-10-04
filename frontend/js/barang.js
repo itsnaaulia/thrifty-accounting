@@ -10,7 +10,6 @@ async function tampilkanBarang() {
         .select("*")
         .order("id", { ascending: true });
 
-
     if (error) {
 
         console.error(
@@ -26,12 +25,10 @@ async function tampilkanBarang() {
         return;
     }
 
-
     semuaBarang = data || [];
 
     filterBarang();
 }
-
 
 
 // TAMPILKAN PRODUCT CARD
@@ -41,17 +38,18 @@ function tampilkanDataBarang(data) {
     const grid =
         document.getElementById("productGrid");
 
-
     const jumlah =
         document.getElementById("jumlahBarang");
 
+    if (!grid || !jumlah) {
+        return;
+    }
 
     grid.innerHTML = "";
 
-
     jumlah.textContent =
-        data.length + (data.length === 1 ? " piece" : " pieces");
-
+        data.length +
+        (data.length === 1 ? " piece" : " pieces");
 
     if (data.length === 0) {
 
@@ -63,25 +61,18 @@ function tampilkanDataBarang(data) {
         return;
     }
 
-
     data.forEach(function (barang) {
-
 
         const card =
             document.createElement("article");
 
-
-        card.className =
-            "product-card";
-
+        card.className = "product-card";
 
         const stok =
             Number(barang.stok);
 
-
         let statusText = "Available";
         let statusClass = "";
-
 
         if (stok === 0) {
 
@@ -98,9 +89,7 @@ function tampilkanDataBarang(data) {
 
         }
 
-
         let stockText;
-
 
         if (stok === 0) {
 
@@ -116,11 +105,9 @@ function tampilkanDataBarang(data) {
 
         }
 
-
         const harga =
             Number(barang.harga_jual)
                 .toLocaleString("id-ID");
-
 
         card.innerHTML = `
 
@@ -136,7 +123,6 @@ function tampilkanDataBarang(data) {
 
                 </div>
 
-
                 <div class="stock-badge ${statusClass}">
                     ${statusText}
                 </div>
@@ -150,16 +136,13 @@ function tampilkanDataBarang(data) {
                     ${barang.kategori || "Fashion"}
                 </p>
 
-
                 <h3 class="product-name">
                     ${barang.nama_barang}
                 </h3>
 
-
                 <p class="product-condition">
                     Pre-loved · Carefully selected
                 </p>
-
 
                 <div class="product-bottom">
 
@@ -167,17 +150,15 @@ function tampilkanDataBarang(data) {
                         Rp ${harga}
                     </p>
 
-
                     <span class="product-stock">
                         ${stockText}
                     </span>
 
                 </div>
 
-
                 <button
                     class="view-button"
-                    onclick="lihatProduk(${barang.id})"
+                    type="button"
                 >
                     View piece
                 </button>
@@ -186,13 +167,21 @@ function tampilkanDataBarang(data) {
 
         `;
 
+        const tombol =
+            card.querySelector(".view-button");
+
+        tombol.addEventListener(
+            "click",
+            function () {
+                lihatProduk(barang.id);
+            }
+        );
 
         grid.appendChild(card);
 
     });
 
 }
-
 
 
 // FILTER BARANG
@@ -202,48 +191,42 @@ function filterBarang() {
     const input =
         document.getElementById("cariBarang");
 
-
     const select =
         document.getElementById("filterKategori");
 
+    if (!input || !select) {
+        return;
+    }
 
     const kataKunci =
         input.value
             .toLowerCase()
             .trim();
 
-
     const kategoriDipilih =
         select.value;
 
-
     const hasilFilter =
         semuaBarang.filter(function (barang) {
-
 
             const nama =
                 (barang.nama_barang || "")
                     .toLowerCase();
 
-
             const kode =
                 (barang.kode_barang || "")
                     .toLowerCase();
 
-
             const kategori =
                 barang.kategori || "";
-
 
             const cocokKataKunci =
                 nama.includes(kataKunci) ||
                 kode.includes(kataKunci);
 
-
             const cocokKategori =
                 kategoriDipilih === "" ||
                 kategori === kategoriDipilih;
-
 
             return (
                 cocokKataKunci &&
@@ -252,11 +235,9 @@ function filterBarang() {
 
         });
 
-
     tampilkanDataBarang(hasilFilter);
 
 }
-
 
 
 // PESAN KOSONG
@@ -269,6 +250,9 @@ function tampilkanPesanKosong(
     const grid =
         document.getElementById("productGrid");
 
+    if (!grid) {
+        return;
+    }
 
     grid.innerHTML = `
 
@@ -289,7 +273,6 @@ function tampilkanPesanKosong(
 }
 
 
-
 // DETAIL PRODUK
 
 function lihatProduk(id) {
@@ -301,16 +284,13 @@ function lihatProduk(id) {
 
         });
 
-
     if (!barang) {
         return;
     }
 
-
     const harga =
         Number(barang.harga_jual)
             .toLocaleString("id-ID");
-
 
     alert(
         "THRIFTY\n\n" +
@@ -326,29 +306,37 @@ function lihatProduk(id) {
 }
 
 
+// JALANKAN SETELAH HTML SELESAI DIMUAT
 
-// EVENT SEARCH
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-document
-    .getElementById("cariBarang")
-    .addEventListener(
-        "input",
-        filterBarang
-    );
+        const input =
+            document.getElementById("cariBarang");
 
+        const select =
+            document.getElementById("filterKategori");
 
+        if (input) {
 
-// EVENT FILTER
+            input.addEventListener(
+                "input",
+                filterBarang
+            );
 
-document
-    .getElementById("filterKategori")
-    .addEventListener(
-        "change",
-        filterBarang
-    );
+        }
 
+        if (select) {
 
+            select.addEventListener(
+                "change",
+                filterBarang
+            );
 
-// JALANKAN
+        }
 
-tampilkanBarang();
+        tampilkanBarang();
+
+    }
+);
