@@ -1,491 +1,745 @@
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Settings — THRIFTY</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            --bg: #f1efe9;
+            --surface: #f9f7f2;
+            --surface-2: #e9e6de;
+            --text: #292b27;
+            --muted: #77786f;
+            --border: #d8d5ce;
+            --accent: #59634f;
+            --accent-soft: #e0e5d9;
+            --danger: #a5483e;
+            --shadow: 0 8px 30px rgba(41,43,39,.04);
         }
+
+        body.dark {
+            --bg: #20221f;
+            --surface: #292c27;
+            --surface-2: #353831;
+            --text: #f1efe9;
+            --muted: #b3b5aa;
+            --border: #44483f;
+            --accent: #b8c5a9;
+            --accent-soft: #3a4436;
+            --danger: #e8a39b;
+            --shadow: 0 8px 30px rgba(0,0,0,.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: "DM Sans", sans-serif;
-            background: #f1efe9;
-            color: #292b27;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
+            transition: background .2s, color .2s;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+        a { color: inherit; text-decoration: none; }
+        button, input, select { font: inherit; }
+        button { cursor: pointer; }
+        button:focus-visible, a:focus-visible, input:focus-visible,
+        select:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* SIDEBAR */
+        .layout { min-height: 100vh; display: flex; }
 
         .sidebar {
             width: 240px;
-            padding: 32px 24px;
-            border-right: 1px solid #d8d5ce;
-            background: #f1efe9;
+            padding: 30px 20px;
+            border-right: 1px solid var(--border);
+            background: var(--bg);
             flex-shrink: 0;
-        }
-
-        .brand {
-            margin-bottom: 50px;
-        }
-
-        .brand-mark {
-            width: 38px;
-            height: 38px;
-            border: 1px solid #292b27;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Bodoni Moda", serif;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .brand-name {
-            font-family: "Bodoni Moda", serif;
-            font-size: 22px;
-            letter-spacing: 1px;
-        }
-
-        .brand-location {
-            font-size: 11px;
-            color: #77786f;
-            margin-top: 3px;
-        }
-
-        .nav {
             display: flex;
             flex-direction: column;
-            gap: 8px;
         }
 
+        .brand { padding: 0 8px; margin-bottom: 42px; }
+        .brand-mark {
+            width: 38px; height: 38px; border: 1px solid var(--text);
+            border-radius: 50%; display: grid; place-items: center;
+            font-family: "Bodoni Moda", serif; font-size: 18px; margin-bottom: 10px;
+        }
+        .brand-name { font: 22px "Bodoni Moda", serif; letter-spacing: 1px; }
+        .brand-location { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+        .nav-label {
+            padding: 0 10px; margin-bottom: 10px; color: var(--muted);
+            font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+
+        .nav { display: flex; flex-direction: column; gap: 5px; }
         .nav a {
-            padding: 11px 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: 0.2s ease;
+            padding: 11px 12px; border-radius: 8px; font-size: 13px;
+            transition: background .2s;
         }
-
-        .nav a:hover {
-            background: #e5e2da;
-        }
-
-        .nav a.active {
-            background: #292b27;
-            color: #f1efe9;
-        }
+        .nav a:hover { background: var(--surface-2); }
+        .nav a.active { background: var(--text); color: var(--bg); }
 
         .sidebar-bottom {
-            margin-top: 50px;
-            padding: 16px 12px;
-            border-top: 1px solid #d8d5ce;
-            font-size: 11px;
-            line-height: 1.6;
-            color: #77786f;
+            margin-top: auto; padding: 18px 10px 0;
+            border-top: 1px solid var(--border); font-size: 11px;
+            line-height: 1.7; color: var(--muted);
         }
 
-        /* MAIN */
-
-        .main {
-            flex: 1;
-            padding: 42px 52px;
-            max-width: 1100px;
+        .main { flex: 1; min-width: 0; padding: 38px 5%; max-width: 1250px; }
+        .topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; margin-bottom: 34px;
         }
-
-        .page-header {
-            margin-bottom: 36px;
+        .breadcrumb { color: var(--muted); font-size: 12px; }
+        .breadcrumb span { color: var(--text); }
+        .status {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-size: 11px; color: var(--muted);
         }
+        .status-dot { width: 7px; height: 7px; background: #788b65; border-radius: 50%; }
 
+        .page-heading { margin-bottom: 30px; }
         .eyebrow {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #77786f;
-            margin-bottom: 8px;
+            color: var(--muted); font-size: 10px; letter-spacing: 1.7px;
+            text-transform: uppercase; margin-bottom: 9px;
+        }
+        h1 { font: 400 clamp(32px, 4vw, 43px)/1.15 "Bodoni Moda", serif; }
+        .intro { margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+
+        .settings-layout {
+            display: grid; grid-template-columns: 205px minmax(0, 1fr);
+            gap: 28px; align-items: start;
         }
 
-        h1 {
-            font-family: "Bodoni Moda", serif;
-            font-size: 42px;
-            font-weight: 400;
-            line-height: 1.1;
+        .category-list {
+            display: flex; flex-direction: column; gap: 5px;
+            position: sticky; top: 20px;
         }
-
-        .page-description {
-            margin-top: 10px;
-            max-width: 560px;
-            color: #696a63;
-            font-size: 14px;
-            line-height: 1.7;
+        .category-button {
+            width: 100%; border: 1px solid transparent; background: transparent;
+            color: var(--text); padding: 12px; border-radius: 9px;
+            text-align: left; display: flex; align-items: center; gap: 11px;
+            font-size: 12px; transition: .2s;
         }
-
-        /* SETTINGS */
-
-        .settings-list {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+        .category-button:hover { background: var(--surface-2); }
+        .category-button.active {
+            background: var(--surface); border-color: var(--border);
+            box-shadow: var(--shadow); font-weight: 600;
         }
-
-        .settings-card {
-            background: #f7f5f0;
-            border: 1px solid #d8d5ce;
-            border-radius: 14px;
-            padding: 24px;
+        .category-icon {
+            width: 20px; text-align: center; color: var(--muted); font-size: 16px;
         }
+        .category-button.active .category-icon { color: var(--accent); }
 
-        .settings-card h2 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
+        .content { min-width: 0; }
+        .panel { display: none; animation: fade .18s ease; }
+        .panel.active { display: block; }
+        @keyframes fade { from { opacity: .65; transform: translateY(3px); } to { opacity: 1; transform: none; } }
 
-        .settings-card-description {
-            font-size: 12px;
-            color: #77786f;
-            margin-bottom: 22px;
+        .panel-heading { margin-bottom: 20px; }
+        .panel-heading h2 { font-size: 17px; font-weight: 600; }
+        .panel-heading p { margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+        .card {
+            padding: 23px; border: 1px solid var(--border);
+            background: var(--surface); border-radius: 13px;
+            margin-bottom: 16px; box-shadow: var(--shadow);
         }
+        .card-title { font-size: 13px; font-weight: 600; }
+        .card-description { margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+
+        .profile-top {
+            display: flex; align-items: center; gap: 15px;
+            padding-bottom: 22px; margin-bottom: 20px; border-bottom: 1px solid var(--border);
+        }
+        .avatar {
+            width: 54px; height: 54px; border-radius: 50%;
+            display: grid; place-items: center; background: var(--accent-soft);
+            color: var(--text); font: 25px "Bodoni Moda", serif; flex-shrink: 0;
+        }
+        .profile-name { font-size: 14px; font-weight: 600; }
+        .profile-caption { font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+        .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+        .field.full { grid-column: 1 / -1; }
+        .field label { font-size: 11px; font-weight: 600; }
+        .field input, .field select {
+            width: 100%; min-width: 0; border: 1px solid var(--border);
+            border-radius: 7px; padding: 11px 12px; color: var(--text);
+            background: var(--bg); font-size: 12px;
+        }
+        .field input:disabled { opacity: .65; cursor: not-allowed; }
+        .field small { font-size: 10px; line-height: 1.6; color: var(--muted); }
+
+        .card-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px; margin-top: 22px; padding-top: 17px;
+            border-top: 1px solid var(--border);
+        }
+        .hint { font-size: 10px; line-height: 1.6; color: var(--muted); }
+        .button {
+            border: 1px solid var(--border); border-radius: 7px; padding: 10px 14px;
+            background: var(--surface); color: var(--text); font-size: 11px;
+            font-weight: 600; transition: .2s;
+        }
+        .button:hover { background: var(--surface-2); }
+        .button.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+        .button.primary:hover { opacity: .85; }
+        .button.danger { color: var(--danger); }
 
         .setting-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            padding: 16px 0;
-            border-top: 1px solid #dedbd4;
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 18px; padding: 17px 0; border-bottom: 1px solid var(--border);
         }
+        .setting-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .setting-row:first-child { padding-top: 0; }
+        .row-title { font-size: 12px; font-weight: 600; }
+        .row-description { margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.7; max-width: 400px; }
 
-        .setting-row:first-of-type {
-            border-top: none;
-            padding-top: 0;
+        .switch {
+            position: relative; width: 40px; height: 23px; flex-shrink: 0;
+            appearance: none; border: 1px solid var(--border); border-radius: 20px;
+            background: var(--surface-2); cursor: pointer; transition: .2s;
         }
-
-        .setting-label {
-            font-size: 14px;
-            font-weight: 500;
+        .switch::after {
+            content: ""; position: absolute; width: 17px; height: 17px;
+            top: 2px; left: 2px; border-radius: 50%; background: var(--muted); transition: .2s;
         }
+        .switch:checked { background: var(--accent); border-color: var(--accent); }
+        .switch:checked::after { left: 19px; background: white; }
 
-        .setting-value {
-            font-size: 13px;
-            color: #77786f;
-            text-align: right;
+        .account-status {
+            display: inline-flex; padding: 5px 8px; border-radius: 5px;
+            background: var(--surface-2); font-size: 10px; color: var(--muted);
         }
-
-        .about-name {
-            font-family: "Bodoni Moda", serif;
-            font-size: 24px;
-            margin-bottom: 8px;
+        .notice {
+            border: 1px solid var(--border); background: var(--bg);
+            border-radius: 8px; padding: 13px; color: var(--muted);
+            font-size: 11px; line-height: 1.8; margin-top: 16px;
         }
-
-        .about-text {
-            font-size: 13px;
-            color: #696a63;
-            line-height: 1.7;
-            max-width: 650px;
+        .about-mark {
+            width: 64px; height: 64px; border: 1px solid var(--text);
+            display: grid; place-items: center; border-radius: 50%;
+            font: 31px "Bodoni Moda", serif; margin-bottom: 20px;
         }
+        .about-name { font: 27px "Bodoni Moda", serif; letter-spacing: 1px; }
+        .version-line { display: flex; justify-content: space-between; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
+        .version-line:last-child { border: 0; padding-bottom: 0; }
+        .version-line span:last-child { color: var(--muted); text-align: right; }
 
-        /* RESPONSIVE */
+        #toast {
+            position: fixed; right: 22px; bottom: 22px; z-index: 10;
+            max-width: calc(100vw - 44px); padding: 13px 17px;
+            background: var(--text); color: var(--bg); border-radius: 8px;
+            font-size: 12px; box-shadow: var(--shadow);
+            opacity: 0; transform: translateY(8px); pointer-events: none; transition: .2s;
+        }
+        #toast.show { opacity: 1; transform: none; }
 
-        @media (max-width: 760px) {
-
-            .layout {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #d8d5ce;
-                padding: 20px;
-            }
-
-            .brand {
-                margin-bottom: 20px;
-            }
-
-            .nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .nav a {
-                font-size: 12px;
-            }
-
-            .sidebar-bottom {
-                display: none;
-            }
-
-            .main {
-                padding: 32px 20px;
-            }
-
-            h1 {
-                font-size: 34px;
-            }
-
-            .setting-row {
-                align-items: flex-start;
-                flex-direction: column;
-                gap: 6px;
-            }
-
-            .setting-value {
-                text-align: left;
-            }
+        @media (max-width: 850px) {
+            .sidebar { width: 200px; padding: 24px 15px; }
+            .main { padding: 30px 24px; }
+            .settings-layout { grid-template-columns: 1fr; gap: 17px; }
+            .category-list { position: static; flex-direction: row; flex-wrap: wrap; }
+            .category-button { width: auto; flex: 1 1 135px; border-color: var(--border); background: var(--surface); }
+        }
+        @media (max-width: 600px) {
+            .layout { display: block; }
+            .sidebar { width: 100%; border-right: 0; border-bottom: 1px solid var(--border); padding: 18px; }
+            .brand { margin-bottom: 18px; }
+            .nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }
+            .nav a { padding: 9px; font-size: 11px; }
+            .nav-label, .sidebar-bottom { display: none; }
+            .main { padding: 25px 16px 35px; }
+            .topbar { margin-bottom: 27px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .field.full { grid-column: auto; }
+            .card { padding: 17px; }
+            .category-button { flex-basis: 43%; }
+            .setting-row { align-items: flex-start; }
+            .card-footer { align-items: flex-start; flex-direction: column; }
         }
     </style>
 </head>
-
 <body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">T</div>
+            <div class="brand-name">THRIFTY</div>
+            <div class="brand-location" id="sidebarLocation">Tembalang, Semarang</div>
+        </div>
 
-    <div class="layout">
+        <p class="nav-label">Workspace</p>
+        <nav class="nav">
+            <a href="../index.html">Dashboard</a>
+            <a href="barang.html">Data Barang</a>
+            <a href="pelanggan.html">Data Pelanggan</a>
+            <a href="penjualan.html">Data Penjualan</a>
+            <a href="laporan.html">Laporan</a>
+            <a href="settings.html" class="active" aria-current="page">Settings</a>
+        </nav>
 
-        <!-- SIDEBAR -->
+        <div class="sidebar-bottom">
+            Good day, THRIFTYers.<br>
+            Pre-loved pieces, thoughtfully selected.
+        </div>
+    </aside>
 
-        <aside class="sidebar">
+    <main class="main">
+        <div class="topbar">
+            <div class="breadcrumb">Workspace / <span>Settings</span></div>
+            <div class="status"><span class="status-dot"></span> Local preferences</div>
+        </div>
 
-            <div class="brand">
+        <header class="page-heading">
+            <p class="eyebrow">Personalize your workspace</p>
+            <h1>Settings</h1>
+            <p class="intro">Make THRIFTY work the way you do. Manage your account information, store details, and app preferences in one place.</p>
+        </header>
 
-                <div class="brand-mark">
-                    T
-                </div>
-
-                <div class="brand-name">
-                    THRIFTY
-                </div>
-
-                <div class="brand-location">
-                    Tembalang, Semarang
-                </div>
-
-            </div>
-
-            <nav class="nav">
-
-                <a href="../index.html">
-                    Dashboard
-                </a>
-
-                <a href="barang.html">
-                    Data Barang
-                </a>
-
-                <a href="pelanggan.html">
-                    Data Pelanggan
-                </a>
-
-                <a href="penjualan.html">
-                    Data Penjualan
-                </a>
-
-                <a href="laporan.html">
-                    Laporan
-                </a>
-
-                <a href="settings.html" class="active">
-                    Settings
-                </a>
-
+        <div class="settings-layout">
+            <nav class="category-list" aria-label="Settings categories">
+                <button class="category-button active" data-panel="account"><span class="category-icon">♙</span> Account</button>
+                <button class="category-button" data-panel="store"><span class="category-icon">⌂</span> Store settings</button>
+                <button class="category-button" data-panel="preferences"><span class="category-icon">⚙</span> App preferences</button>
+                <button class="category-button" data-panel="notifications"><span class="category-icon">♧</span> Notifications</button>
+                <button class="category-button" data-panel="security"><span class="category-icon">◇</span> Privacy & security</button>
+                <button class="category-button" data-panel="about"><span class="category-icon">ⓘ</span> About THRIFTY</button>
             </nav>
 
-            <div class="sidebar-bottom">
-                Good day, THRIFTYers.<br>
-                Pre-loved pieces, thoughtfully selected.
+            <div class="content">
+                <section class="panel active" id="panel-account">
+                    <div class="panel-heading">
+                        <h2>Account</h2>
+                        <p>Manage your profile and account details.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="profile-top">
+                            <div class="avatar" id="avatarLetter">T</div>
+                            <div>
+                                <div class="profile-name" id="profileDisplayName">THRIFTY Admin</div>
+                                <div class="profile-caption">Workspace profile · Local device</div>
+                            </div>
+                        </div>
+
+                        <form id="accountForm">
+                            <div class="form-grid">
+                                <div class="field">
+                                    <label for="accountName">Display name</label>
+                                    <input id="accountName" maxlength="60" placeholder="e.g. THRIFTY Admin">
+                                </div>
+                                <div class="field">
+                                    <label for="accountEmail">Email address</label>
+                                    <input id="accountEmail" type="email" maxlength="120" placeholder="name@example.com">
+                                    <small>For reference only; this does not create a login account.</small>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <span class="hint">Your profile is stored in this browser.</span>
+                                <button class="button primary" type="submit">Save profile</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Account status</div>
+                                <div class="row-description">THRIFTY currently operates without sign-in or user authentication.</div>
+                            </div>
+                            <span class="account-status">Guest mode</span>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Password</div>
+                                <div class="row-description">Password management becomes available after an authentication system is implemented.</div>
+                            </div>
+                            <span class="account-status">Not configured</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel" id="panel-store">
+                    <div class="panel-heading">
+                        <h2>Store settings</h2>
+                        <p>Keep your shop information consistent across your workspace.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Store profile</div>
+                        <p class="card-description">Edit the name and location shown in Settings.</p>
+                        <form id="storeForm">
+                            <div class="form-grid" style="margin-top:20px">
+                                <div class="field">
+                                    <label for="storeName">Store name</label>
+                                    <input id="storeName" maxlength="80" required>
+                                </div>
+                                <div class="field">
+                                    <label for="storeType">Business type</label>
+                                    <select id="storeType">
+                                        <option>Pre-loved fashion</option>
+                                        <option>Clothing retail</option>
+                                        <option>Fashion accessories</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="field full">
+                                    <label for="storeLocation">Store location</label>
+                                    <input id="storeLocation" maxlength="120" required>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <span class="hint">Saved details appear in this Settings page.</span>
+                                <button class="button primary" type="submit">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Sales defaults</div>
+                        <p class="card-description">Reference information for the current sales workflow.</p>
+                        <div style="margin-top:18px">
+                            <div class="setting-row">
+                                <div><div class="row-title">Currency</div><div class="row-description">Currency used for sales values.</div></div>
+                                <span class="account-status">IDR · Rupiah</span>
+                            </div>
+                            <div class="setting-row">
+                                <div><div class="row-title">Payment methods</div><div class="row-description">Cash, bank transfer, e-wallet, and QRIS.</div></div>
+                                <span class="account-status">4 methods</span>
+                            </div>
+                        </div>
+                        <p class="notice">These settings are informational. Changing them here does not automatically change the transaction form or database schema.</p>
+                    </div>
+                </section>
+
+                <section class="panel" id="panel-preferences">
+                    <div class="panel-heading">
+                        <h2>App preferences</h2>
+                        <p>Customize the way THRIFTY looks and presents information.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Appearance</div>
+                                <div class="row-description">Switch between the signature cream palette and a darker interface.</div>
+                            </div>
+                            <select id="themeSelect" aria-label="Appearance">
+                                <option value="light">Light · Cream</option>
+                                <option value="dark">Dark</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Language</div>
+                                <div class="row-description">Interface language preference.</div>
+                            </div>
+                            <select id="languageSelect" aria-label="Language">
+                                <option value="en">English</option>
+                                <option value="id">Bahasa Indonesia</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Date format</div>
+                                <div class="row-description">Preferred date display format.</div>
+                            </div>
+                            <select id="dateFormatSelect" aria-label="Date format">
+                                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            </select>
+                        </div>
+                        <div class="card-footer">
+                            <span class="hint">Preferences are saved in this browser.</span>
+                            <button class="button primary" id="savePreferences" type="button">Save preferences</button>
+                        </div>
+                        <p class="notice">The theme changes this Settings page. Language and date format are saved as preferences but do not yet translate or reformat the other pages automatically.</p>
+                    </div>
+                </section>
+
+                <section class="panel" id="panel-notifications">
+                    <div class="panel-heading">
+                        <h2>Notifications</h2>
+                        <p>Choose which reminders you would like to enable for this workspace.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Low stock reminder</div>
+                                <div class="row-description">Preference for a reminder when an item's stock is low.</div>
+                            </div>
+                            <input class="switch" type="checkbox" id="lowStockToggle" aria-label="Low stock reminder">
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Out of stock reminder</div>
+                                <div class="row-description">Preference for a reminder when an item is out of stock.</div>
+                            </div>
+                            <input class="switch" type="checkbox" id="outStockToggle" aria-label="Out of stock reminder">
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Sales summary</div>
+                                <div class="row-description">Preference for a future sales summary feature.</div>
+                            </div>
+                            <input class="switch" type="checkbox" id="salesSummaryToggle" aria-label="Sales summary">
+                        </div>
+                        <p class="notice">These switches save your preferences only. THRIFTY does not currently send push notifications or automatic reminders.</p>
+                    </div>
+                </section>
+
+                <section class="panel" id="panel-security">
+                    <div class="panel-heading">
+                        <h2>Privacy & security</h2>
+                        <p>Understand how this prototype stores your settings and connects to data.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Sign-in protection</div>
+                                <div class="row-description">User authentication has not been implemented.</div>
+                            </div>
+                            <span class="account-status">Not enabled</span>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Profile and preferences</div>
+                                <div class="row-description">The settings on this page are saved in this browser using local storage.</div>
+                            </div>
+                            <span class="account-status">Local browser</span>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="row-title">Business data</div>
+                                <div class="row-description">Product, customer, and transaction data are handled separately through the connected Supabase project.</div>
+                            </div>
+                            <span class="account-status">Supabase</span>
+                        </div>
+                        <p class="notice">This is an academic prototype. Before using real customer information, configure suitable Supabase Row Level Security policies and authentication. Never put a service-role secret in frontend code.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Reset local settings</div>
+                        <p class="card-description">Restore this browser's THRIFTY profile and preferences to their default values. This will not delete Supabase records.</p>
+                        <div class="card-footer">
+                            <span class="hint">Only local Settings values will be reset.</span>
+                            <button class="button danger" id="resetSettings" type="button">Reset preferences</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel" id="panel-about">
+                    <div class="panel-heading">
+                        <h2>About THRIFTY</h2>
+                        <p>A little information about your workspace.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="about-mark">T</div>
+                        <div class="about-name">THRIFTY</div>
+                        <p class="card-description" style="max-width:440px;margin-top:10px">
+                            A simple accounting system for pre-loved fashion businesses, bringing product inventory, customer records, sales transactions, and basic financial reporting together in one workspace.
+                        </p>
+                        <div style="margin-top:24px">
+                            <div class="version-line"><span>Application</span><span>THRIFTY Accounting</span></div>
+                            <div class="version-line"><span>Version</span><span>1.0.0 · Academic prototype</span></div>
+                            <div class="version-line"><span>Business category</span><span>Pre-loved fashion</span></div>
+                            <div class="version-line"><span>Location</span><span id="aboutLocation">Tembalang, Semarang</span></div>
+                        </div>
+                    </div>
+                </section>
             </div>
-
-        </aside>
-
-
-        <!-- MAIN CONTENT -->
-
-        <main class="main">
-
-            <header class="page-header">
-
-                <p class="eyebrow">
-                    THRIFTY
-                </p>
-
-                <h1>
-                    Settings
-                </h1>
-
-                <p class="page-description">
-                    Manage your shop information and application preferences.
-                </p>
-
-            </header>
-
-
-            <section class="settings-list">
-
-
-                <!-- SHOP PROFILE -->
-
-                <div class="settings-card">
-
-                    <h2>
-                        Shop Profile
-                    </h2>
-
-                    <p class="settings-card-description">
-                        Basic information about your thrift shop.
-                    </p>
-
-                    <div class="setting-row">
-
-                        <div class="setting-label">
-                            Shop name
-                        </div>
-
-                        <div class="setting-value">
-                            THRIFTY
-                        </div>
-
-                    </div>
-
-                    <div class="setting-row">
-
-                        <div class="setting-label">
-                            Location
-                        </div>
-
-                        <div class="setting-value">
-                            Tembalang, Semarang
-                        </div>
-
-                    </div>
-
-                    <div class="setting-row">
-
-                        <div class="setting-label">
-                            Business type
-                        </div>
-
-                        <div class="setting-value">
-                            Pre-loved fashion
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- SALES PREFERENCES -->
-
-                <div class="settings-card">
-
-                    <h2>
-                        Sales Preferences
-                    </h2>
-
-                    <p class="settings-card-description">
-                        Payment methods currently available for transactions.
-                    </p>
-
-                    <div class="setting-row">
-
-                        <div class="setting-label">
-                            Cash
-                        </div>
-
-                        <div class="setting-value">
-                            Available
-                        </div>
-
-                    </div>
-
-                    <div class="setting-row">
-
-                        <div class="setting-label">
-                            Bank Transfer
-                        </div>
-
-                        <div class="setting-value">
-                            Available
-                        </div>
-
-                    </div>
-
-                    <div class="setting-row">
-
-                        <div class="setting-label">
-                            E-Wallet
-                        </div>
-
-                        <div class="setting-value">
-                            Available
-                        </div>
-
-                    </div>
-
-                    <div class="setting-row">
-
-                        <div class="setting-label">
-                            QRIS
-                        </div>
-
-                        <div class="setting-value">
-                            Available
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ABOUT -->
-
-                <div class="settings-card">
-
-                    <h2>
-                        About
-                    </h2>
-
-                    <p class="settings-card-description">
-                        Information about this application.
-                    </p>
-
-                    <div class="about-name">
-                        THRIFTY
-                    </div>
-
-                    <p class="about-text">
-                        THRIFTY is a simple accounting system for managing
-                        pre-loved fashion sales, inventory, customers,
-                        transactions, and basic financial reports.
-                    </p>
-
-                </div>
-
-
-            </section>
-
-        </main>
-
-    </div>
-
+        </div>
+    </main>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+    const STORAGE_KEY = "thriftySettingsV1";
+    const defaults = {
+        accountName: "THRIFTY Admin",
+        accountEmail: "",
+        storeName: "THRIFTY",
+        storeType: "Pre-loved fashion",
+        storeLocation: "Tembalang, Semarang",
+        theme: "light",
+        language: "en",
+        dateFormat: "DD/MM/YYYY",
+        lowStock: true,
+        outStock: true,
+        salesSummary: false
+    };
+
+    function readSettings() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+            return { ...defaults, ...(saved && typeof saved === "object" ? saved : {}) };
+        } catch (error) {
+            return { ...defaults };
+        }
+    }
+
+    let settings = readSettings();
+    let toastTimer;
+
+    function persist() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+            return true;
+        } catch (error) {
+            showToast("Could not save settings in this browser.");
+            return false;
+        }
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    function setValue(id, value) {
+        const element = document.getElementById(id);
+        if (element) element.value = value;
+    }
+
+    function setChecked(id, value) {
+        const element = document.getElementById(id);
+        if (element) element.checked = Boolean(value);
+    }
+
+    function applyTheme() {
+        document.body.classList.toggle("dark", settings.theme === "dark");
+        setValue("themeSelect", settings.theme);
+    }
+
+    function renderProfile() {
+        setValue("accountName", settings.accountName);
+        setValue("accountEmail", settings.accountEmail);
+        setValue("storeName", settings.storeName);
+        setValue("storeType", settings.storeType);
+        setValue("storeLocation", settings.storeLocation);
+        setValue("languageSelect", settings.language);
+        setValue("dateFormatSelect", settings.dateFormat);
+        setChecked("lowStockToggle", settings.lowStock);
+        setChecked("outStockToggle", settings.outStock);
+        setChecked("salesSummaryToggle", settings.salesSummary);
+
+        document.getElementById("profileDisplayName").textContent =
+            settings.accountName || "THRIFTY Admin";
+        document.getElementById("avatarLetter").textContent =
+            (settings.accountName || "T").trim().charAt(0).toUpperCase() || "T";
+        document.getElementById("sidebarLocation").textContent = settings.storeLocation;
+        document.getElementById("aboutLocation").textContent = settings.storeLocation;
+    }
+
+    document.querySelectorAll(".category-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const target = button.dataset.panel;
+            document.querySelectorAll(".category-button").forEach(item => {
+                const active = item === button;
+                item.classList.toggle("active", active);
+                item.setAttribute("aria-pressed", String(active));
+            });
+            document.querySelectorAll(".panel").forEach(panel => {
+                panel.classList.toggle("active", panel.id === "panel-" + target);
+            });
+        });
+        button.setAttribute("aria-pressed", String(button.classList.contains("active")));
+    });
+
+    document.getElementById("accountForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const name = document.getElementById("accountName").value.trim();
+        const email = document.getElementById("accountEmail").value.trim();
+        if (!name) {
+            showToast("Please enter a display name.");
+            return;
+        }
+        settings.accountName = name;
+        settings.accountEmail = email;
+        if (persist()) {
+            renderProfile();
+            showToast("Profile saved.");
+        }
+    });
+
+    document.getElementById("storeForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const name = document.getElementById("storeName").value.trim();
+        const location = document.getElementById("storeLocation").value.trim();
+        if (!name || !location) {
+            showToast("Please complete the store name and location.");
+            return;
+        }
+        settings.storeName = name;
+        settings.storeType = document.getElementById("storeType").value;
+        settings.storeLocation = location;
+        if (persist()) {
+            renderProfile();
+            showToast("Store settings saved.");
+        }
+    });
+
+    document.getElementById("savePreferences").addEventListener("click", () => {
+        settings.theme = document.getElementById("themeSelect").value;
+        settings.language = document.getElementById("languageSelect").value;
+        settings.dateFormat = document.getElementById("dateFormatSelect").value;
+        if (persist()) {
+            applyTheme();
+            showToast("Preferences saved.");
+        }
+    });
+
+    document.getElementById("themeSelect").addEventListener("change", event => {
+        settings.theme = event.target.value;
+        applyTheme();
+    });
+
+    [
+        ["lowStockToggle", "lowStock"],
+        ["outStockToggle", "outStock"],
+        ["salesSummaryToggle", "salesSummary"]
+    ].forEach(([id, key]) => {
+        document.getElementById(id).addEventListener("change", event => {
+            settings[key] = event.target.checked;
+            if (persist()) showToast("Notification preference saved.");
+        });
+    });
+
+    document.getElementById("resetSettings").addEventListener("click", () => {
+        const confirmed = window.confirm(
+            "Reset THRIFTY profile and preferences in this browser? Supabase data will not be deleted."
+        );
+        if (!confirmed) return;
+
+        settings = { ...defaults };
+        if (persist()) {
+            renderProfile();
+            applyTheme();
+            showToast("Local settings reset.");
+        }
+    });
+
+    renderProfile();
+    applyTheme();
+})();
+</script>
 </body>
 </html>
